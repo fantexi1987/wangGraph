@@ -1,0 +1,148 @@
+<!--
+  Copyright (c) 2006-2013, JGraph Ltd
+  
+  Stylesheet example for wangGraph. This example demonstrates using
+  a custom stylesheet and control points in edges, as well as
+  overriding the getLabel and getTooltip function to return
+  dynamic information, and making a supercall in JavaScript.
+-->
+<html>
+<head>
+	<title>Stylesheet example for wangGraph</title>
+
+	<!-- Sets the basepath for the library if not in same directory -->
+	<script type="text/javascript">
+		wangBasePath = '../dist';
+	</script>
+
+	<!-- Loads and initializes the library -->
+	<script type="text/javascript" src="../dist/wangGraph.umd.js"></script>
+
+	<!-- Example code -->
+	<script type="text/javascript">
+		Object.keys(window.wGraph).forEach(wangGraphClassName => { window[wangGraphClassName] = window.wGraph[wangGraphClassName]; });
+		// Program starts here. Creates a sample graph in the
+		// DOM node with the specified ID. This function is invoked
+		// from the onLoad event handler of the document (see below).
+		function main(container)
+		{
+			// Checks if browser is supported
+			if (!wangClient.isBrowserSupported())
+			{
+				// Displays an error message if the browser is
+				// not supported.
+				wangUtils.error('Browser is not supported!', 200, false);
+			}
+			else
+			{
+				// Creates the graph inside the DOM node.
+				var graph = new wangGraph(container);
+			
+				// Disables basic selection and cell handling
+				graph.setEnabled(false);
+				
+				// Returns a special label for edges. Note: This does
+				// a supercall to use the default implementation.
+				graph.getLabel = function(cell)
+				{
+					var label = wangGraph.prototype.getLabel.apply(this, arguments);
+					
+					if (this.getModel().isEdge(cell))
+					{
+						return 'Transfer '+label;
+					}
+					else
+					{
+						return label;
+					}
+				};
+								
+				// Installs a custom global tooltip
+				graph.setTooltips(true);
+				graph.getTooltip = function(state)
+				{
+					var cell = state.cell;
+					var model = this.getModel();
+					
+					if (model.isEdge(cell))
+					{
+						var source = this.getLabel(model.getTerminal(cell, true));
+						var target = this.getLabel(model.getTerminal(cell, false));
+						
+						return source+' -> '+target;
+					}
+					else
+					{
+						return this.getLabel(cell);
+					}
+				};
+				
+				// Creates the default style for vertices
+				var style = [];
+				style[wangConstants.STYLE_SHAPE] = wangConstants.SHAPE_RECTANGLE;
+				style[wangConstants.STYLE_PERIMETER] = wangPerimeter.RectanglePerimeter;
+				style[wangConstants.STYLE_STROKECOLOR] = 'gray';
+				style[wangConstants.STYLE_ROUNDED] = true;
+				style[wangConstants.STYLE_FILLCOLOR] = '#EEEEEE';
+				style[wangConstants.STYLE_GRADIENTCOLOR] = 'white';
+				style[wangConstants.STYLE_FONTCOLOR] = '#774400';
+				style[wangConstants.STYLE_ALIGN] = wangConstants.ALIGN_CENTER;
+				style[wangConstants.STYLE_VERTICAL_ALIGN] = wangConstants.ALIGN_MIDDLE;
+				style[wangConstants.STYLE_FONTSIZE] = '12';
+				style[wangConstants.STYLE_FONTSTYLE] = 1;
+				graph.getStylesheet().putDefaultVertexStyle(style);
+		
+				// Creates the default style for edges
+				style = [];
+				style[wangConstants.STYLE_SHAPE] = wangConstants.SHAPE_CONNECTOR;
+				style[wangConstants.STYLE_STROKECOLOR] = '#6482B9';
+				style[wangConstants.STYLE_ALIGN] = wangConstants.ALIGN_CENTER;
+				style[wangConstants.STYLE_VERTICAL_ALIGN] = wangConstants.ALIGN_MIDDLE;
+				style[wangConstants.STYLE_EDGE] = wangEdgeStyle.ElbowConnector;
+				style[wangConstants.STYLE_ENDARROW] = wangConstants.ARROW_CLASSIC;
+				style[wangConstants.STYLE_FONTSIZE] = '10';
+				graph.getStylesheet().putDefaultEdgeStyle(style);
+
+				// Gets the default parent for inserting new cells. This
+				// is normally the first child of the root (ie. layer 0).
+				var parent = graph.getDefaultParent();
+								
+				// Adds cells to the model in a single step
+				graph.getModel().beginUpdate();
+				try
+				{
+					var v1 = graph.insertVertex(parent, null, 'Interval 1', 20, 20, 180, 30);
+					var v2 = graph.insertVertex(parent, null, 'Interval 2', 140, 80, 280, 30);
+					var v3 = graph.insertVertex(parent, null, 'Interval 3', 200, 140, 360, 30);
+					var v4 = graph.insertVertex(parent, null, 'Interval 4', 480, 200, 120, 30);
+					var v5 = graph.insertVertex(parent, null, 'Interval 5', 60, 260, 400, 30);
+					var e1 = graph.insertEdge(parent, null, '1', v1, v2);
+					e1.getGeometry().points = [{x: 160, y: 60}];
+					var e2 = graph.insertEdge(parent, null, '2', v1, v5);
+					e2.getGeometry().points = [{x: 80, y: 60}];
+					var e3 = graph.insertEdge(parent, null, '3', v2, v3);
+					e3.getGeometry().points = [{x: 280, y: 120}];
+					var e4 = graph.insertEdge(parent, null, '4', v3, v4);
+					e4.getGeometry().points = [{x: 500, y: 180}];
+					var e5 = graph.insertEdge(parent, null, '5', v3, v5);
+					e5.getGeometry().points = [{x: 380, y: 180}];
+				}
+				finally
+				{
+					// Updates the display
+					graph.getModel().endUpdate();
+				}
+			}
+		};
+	</script>
+</head>
+
+<!-- Page passes the container for the graph to the program -->
+<body onload="main(document.getElementById('graphContainer'))">
+ 
+	<!-- Creates a container for the graph with a grid wallpaper -->
+	<div id="graphContainer"
+		style="overflow:hidden;position:relative;width:621px;height:311px;cursor:default;">
+	</div>
+</body>
+</html>

@@ -1,0 +1,472 @@
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=5,IE=9" ><![endif]-->
+<!--
+  Copyright (c) 2006-2013, JGraph Ltd
+  
+  Touch example for wangGraph. This example demonstrates handling of touch,
+  mouse and pointer events.
+-->
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Touch example for wangGraph</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalabale=no">
+
+	<!-- Increases size of popup menu entries. See menustyle.html for more styling options. -->
+	<style type="text/css">
+		body div.wangPopupMenu {
+			position: absolute;
+			padding: 3px;
+		}
+		body table.wangPopupMenu {
+			border-collapse: collapse;
+			margin: 0px;
+		}
+		body tr.wangPopupMenuItem {
+			cursor: default;
+		}
+		body td.wangPopupMenuItem {
+			padding: 10px 60px 10px 30px;
+			font-family: Arial;
+			font-size: 9pt;
+		}
+		body td.wangPopupMenuIcon {
+			padding: 0px;
+		}
+		table.wangPopupMenu hr {
+			border-top: solid 1px #cccccc;
+		}
+		table.wangPopupMenu tr {
+			font-size: 4pt;
+		}
+	</style>
+
+	<!-- Sets the basepath for the library if not in same directory -->
+	<script type="text/javascript">
+		wangBasePath = '../dist';
+	</script>
+
+	<!-- Loads and initializes the library -->
+	<script type="text/javascript" src="../dist/wangGraph.umd.js"></script>
+
+	<!-- Example code -->
+	<script type="text/javascript">
+		Object.keys(window.wGraph).forEach(wangGraphClassName => { window[wangGraphClassName] = window.wGraph[wangGraphClassName]; });
+		// Program starts here. Creates a sample graph in the
+		// DOM node with the specified ID. This function is invoked
+		// from the onLoad event handler of the document (see below).
+		function main(container)
+		{
+			// Checks if the browser is supported
+			if (!wangClient.isBrowserSupported())
+			{
+				// Displays an error message if the browser is not supported.
+				wangUtils.error('Browser is not supported!', 200, false);
+			}
+			else
+			{
+				// To detect if touch events are actually supported, the following condition is recommended:
+				// wangClient.IS_TOUCH || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0
+				
+				// Disables built-in text selection and context menu while not editing text
+				var textEditing =  wangUtils.bind(this, function(evt)
+				{
+					return graph.isEditing();
+				});
+
+				container.onselectstart = textEditing;
+				container.onmousedown = textEditing;
+
+				if (wangClient.IS_IE && (typeof(document.documentMode) === 'undefined' || document.documentMode < 9))
+				{
+					wangEvent.addListener(container, 'contextmenu', textEditing);
+				}
+				else
+				{
+					container.oncontextmenu = textEditing;
+				}
+
+				// Creates the graph inside the given container
+				var graph = new wangGraph(container);
+				graph.centerZoom = false;
+				graph.setConnectable(true);
+				graph.setPanning(true);
+				
+				// Creates rubberband selection
+			    var rubberband = new wangRubberband(graph);
+				
+				graph.popupMenuHandler.autoExpand = true;
+				
+				graph.popupMenuHandler.isSelectOnPopup = function(me)
+				{
+					return wangEvent.isMouseEvent(me.getEvent());
+				};
+				
+			    // Installs context menu
+				graph.popupMenuHandler.factoryMethod = function(menu, cell, evt)
+				{
+					menu.addItem('Item 1', null, function()
+				    {
+						alert('Item 1');
+				    });
+
+					menu.addSeparator();
+					
+					var submenu1 = menu.addItem('Submenu 1', null, null);
+					
+					menu.addItem('Subitem 1', null, function()
+				    {
+						alert('Subitem 1');
+				    }, submenu1);
+					menu.addItem('Subitem 1', null, function()
+				    {
+						alert('Subitem 2');
+				    }, submenu1);
+				};
+
+				// Context menu trigger implementation depending on current selection state
+				// combined with support for normal popup trigger.
+				var cellSelected = false;
+				var selectionEmpty = false;
+				var menuShowing = false;
+				
+				graph.fireMouseEvent = function(evtName, me, sender)
+				{
+					if (evtName == wangEvent.MOUSE_DOWN)
+					{
+						// For hit detection on edges
+						me = this.updateMouseEvent(me);
+						
+						cellSelected = this.isCellSelected(me.getCell());
+						selectionEmpty = this.isSelectionEmpty();
+						menuShowing = graph.popupMenuHandler.isMenuShowing();
+					}
+					
+					wangGraph.prototype.fireMouseEvent.apply(this, arguments);
+				};
+				
+				// Shows popup menu if cell was selected or selection was empty and background was clicked
+				graph.popupMenuHandler.mouseUp = function(sender, me)
+				{
+					this.popupTrigger = !graph.isEditing() && (this.popupTrigger || (!menuShowing &&
+							!graph.isEditing() && !wangEvent.isMouseEvent(me.getEvent()) &&
+							((selectionEmpty && me.getCell() == null && graph.isSelectionEmpty()) ||
+							(cellSelected && graph.isCellSelected(me.getCell())))));
+					wangPopupMenuHandler.prototype.mouseUp.apply(this, arguments);
+				};
+
+				// Tap and hold on background starts rubberband for multiple selected
+				// cells the cell associated with the event is deselected
+				graph.addListener(wangEvent.TAP_AND_HOLD, function(sender, evt)
+				{
+					if (!wangEvent.isMultiTouchEvent(evt))
+					{
+						var me = evt.getProperty('event');
+						var cell = evt.getProperty('cell');
+						
+						if (cell == null)
+						{
+							var pt = wangUtils.convertPoint(this.container,
+									wangEvent.getClientX(me), wangEvent.getClientY(me));
+							rubberband.start(pt.x, pt.y);
+						}
+						else if (graph.getSelectionCount() > 1 && graph.isCellSelected(cell))
+						{
+							graph.removeSelectionCell(cell);
+						}
+						
+						// Blocks further processing of the event
+						evt.consume();
+					}
+				});
+				
+				// Adds mouse wheel handling for zoom
+				wangEvent.addMouseWheelListener(function(evt, up)
+				{
+					if (up)
+					{
+						graph.zoomIn();
+					}
+					else
+					{
+						graph.zoomOut();
+					}
+
+					wangEvent.consume(evt);
+				});
+
+				// Gets the default parent for inserting new cells. This
+				// is normally the first child of the root (ie. layer 0).
+				var parent = graph.getDefaultParent();
+								
+				// Adds cells to the model in a single step
+				graph.getModel().beginUpdate();
+				try
+				{
+					var v1 = graph.insertVertex(parent, null, 'Hello,', 20, 20, 80, 30);
+					var v2 = graph.insertVertex(parent, null, 'World!', 200, 150, 80, 30);
+					var e1 = graph.insertEdge(parent, null, '', v1, v2);
+				}
+				finally
+				{
+					// Updates the display
+					graph.getModel().endUpdate();
+				}
+
+				// Disables new connections via "hotspot"
+				graph.connectionHandler.marker.isEnabled = function()
+				{
+					return this.graph.connectionHandler.first != null;
+				};
+
+				// Adds custom hit detection if native hit detection found no cell
+				graph.updateMouseEvent = function(me)
+				{
+					var me = wangGraph.prototype.updateMouseEvent.apply(this, arguments);
+
+					if (me.getState() == null)
+					{
+						var cell = this.getCellAt(me.graphX, me.graphY);
+
+						if (cell != null && this.isSwimlane(cell) && this.hitsSwimlaneContent(cell, me.graphX, me.graphY))
+						{
+							cell = null;
+						}
+						else
+						{
+							me.state = this.view.getState(cell);
+							
+							if (me.state != null && me.state.shape != null)
+							{
+								this.container.style.cursor = me.state.shape.node.style.cursor;
+							}
+						}
+					}
+					
+					if (me.getState() == null)
+					{
+						this.container.style.cursor = 'default';
+					}
+					
+					return me;
+				};
+			}
+		};
+		
+		(function()
+		{
+			// Enables rotation handle
+			wangVertexHandler.prototype.rotationEnabled = true;
+			
+			// Enables managing of sizers
+			wangVertexHandler.prototype.manageSizers = true;
+			
+			// Enables live preview
+			wangVertexHandler.prototype.livePreview = true;
+	
+			// Sets constants for touch style
+			wangConstants.HANDLE_SIZE = 16;
+			wangConstants.LABEL_HANDLE_SIZE = 7;
+	
+			// Larger tolerance and grid for real touch devices
+			if (wangClient.IS_TOUCH || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0)
+			{
+				wangShape.prototype.svgStrokeTolerance = 18;
+				wangVertexHandler.prototype.tolerance = 12;
+				wangEdgeHandler.prototype.tolerance = 12;
+				wangGraph.prototype.tolerance = 12;
+			}
+			
+			// One finger pans (no rubberband selection) must start regardless of mouse button
+			wangPanningHandler.prototype.isPanningTrigger = function(me)
+			{
+				var evt = me.getEvent();
+				
+			 	return (me.getState() == null && !wangEvent.isMouseEvent(evt)) ||
+			 		(wangEvent.isPopupTrigger(evt) && (me.getState() == null ||
+			 		wangEvent.isControlDown(evt) || wangEvent.isShiftDown(evt)));
+			};
+	
+			// Don't clear selection if multiple cells selected
+			var graphHandlerMouseDown = wangGraphHandler.prototype.mouseDown;
+			wangGraphHandler.prototype.mouseDown = function(sender, me)
+			{
+				graphHandlerMouseDown.apply(this, arguments);
+	
+				if (this.graph.isCellSelected(me.getCell()) && this.graph.getSelectionCount() > 1)
+				{
+					this.delayedSelection = false;
+				}
+			};
+	
+			// On connect the target is selected and we clone the cell of the preview edge for insert
+			wangConnectionHandler.prototype.selectCells = function(edge, target)
+			{
+				if (target != null)
+				{
+					this.graph.setSelectionCell(target);
+				}
+				else
+				{
+					this.graph.setSelectionCell(edge);
+				}
+			};
+	
+			// Overrides double click handling to use the tolerance
+			var graphDblClick = wangGraph.prototype.dblClick;
+			wangGraph.prototype.dblClick = function(evt, cell)
+			{
+				if (cell == null)
+				{
+					var pt = wangUtils.convertPoint(this.container,
+						wangEvent.getClientX(evt), wangEvent.getClientY(evt));
+					cell = this.getCellAt(pt.x, pt.y);
+				}
+	
+				graphDblClick.call(this, evt, cell);
+			};
+	
+			// Rounded edge and vertex handles
+			var touchHandle = new wangImage('images/handle-main.png', 17, 17);
+			wangVertexHandler.prototype.handleImage = touchHandle;
+			wangEdgeHandler.prototype.handleImage = touchHandle;
+			wangOutline.prototype.sizerImage = touchHandle;
+			
+			// Pre-fetches touch handle
+			new Image().src = touchHandle.src;
+	
+			// Adds connect icon to selected vertex
+			var connectorSrc = 'images/handle-connect.png';
+	
+			var vertexHandlerInit = wangVertexHandler.prototype.init;
+			wangVertexHandler.prototype.init = function()
+			{
+				// TODO: Use 4 sizers, move outside of shape
+				//this.singleSizer = this.state.width < 30 && this.state.height < 30;
+				vertexHandlerInit.apply(this, arguments);
+	
+				// Only show connector image on one cell and do not show on containers
+				if (this.graph.connectionHandler.isEnabled() &&
+					this.graph.isCellConnectable(this.state.cell) &&
+					this.graph.getSelectionCount() == 1)
+				{
+					this.connectorImg = wangUtils.createImage(connectorSrc);
+					this.connectorImg.style.cursor = 'pointer';
+					this.connectorImg.style.width = '29px';
+					this.connectorImg.style.height = '29px';
+					this.connectorImg.style.position = 'absolute';
+					
+					if (!wangClient.IS_TOUCH)
+					{
+						this.connectorImg.setAttribute('title', wangResources.get('connect'));
+						wangEvent.redirectMouseEvents(this.connectorImg, this.graph, this.state);
+					}
+	
+					// Starts connecting on touch/mouse down
+					wangEvent.addGestureListeners(this.connectorImg,
+						wangUtils.bind(this, function(evt)
+						{
+							this.graph.popupMenuHandler.hideMenu();
+							this.graph.stopEditing(false);
+							
+							var pt = wangUtils.convertPoint(this.graph.container,
+									wangEvent.getClientX(evt), wangEvent.getClientY(evt));
+							this.graph.connectionHandler.start(this.state, pt.x, pt.y);
+							this.graph.isMouseDown = true;
+							this.graph.isMouseTrigger = wangEvent.isMouseEvent(evt);
+							wangEvent.consume(evt);
+						})
+					);
+	
+					this.graph.container.appendChild(this.connectorImg);
+				}
+	
+				this.redrawHandles();
+			};
+			
+			var vertexHandlerHideSizers = wangVertexHandler.prototype.hideSizers;
+			wangVertexHandler.prototype.hideSizers = function()
+			{
+				vertexHandlerHideSizers.apply(this, arguments);
+				
+				if (this.connectorImg != null)
+				{
+					this.connectorImg.style.visibility = 'hidden';
+				}
+			};
+			
+			var vertexHandlerReset = wangVertexHandler.prototype.reset;
+			wangVertexHandler.prototype.reset = function()
+			{
+				vertexHandlerReset.apply(this, arguments);
+				
+				if (this.connectorImg != null)
+				{
+					this.connectorImg.style.visibility = '';
+				}
+			};
+			
+			var vertexHandlerRedrawHandles = wangVertexHandler.prototype.redrawHandles;
+			wangVertexHandler.prototype.redrawHandles = function()
+			{
+				vertexHandlerRedrawHandles.apply(this);
+	
+				if (this.state != null && this.connectorImg != null)
+				{
+					var pt = new wangPoint();
+					var s = this.state;
+					
+					// Top right for single-sizer
+					if (wangVertexHandler.prototype.singleSizer)
+					{
+						pt.x = s.x + s.width - this.connectorImg.offsetWidth / 2;
+						pt.y = s.y - this.connectorImg.offsetHeight / 2;
+					}
+					else
+					{
+						pt.x = s.x + s.width + wangConstants.HANDLE_SIZE / 2 + 4 + this.connectorImg.offsetWidth / 2;
+						pt.y = s.y + s.height / 2;
+					}
+					
+					var alpha = wangUtils.toRadians(wangUtils.getValue(s.style, wangConstants.STYLE_ROTATION, 0));
+					
+					if (alpha != 0)
+					{
+						var cos = Math.cos(alpha);
+						var sin = Math.sin(alpha);
+						
+						var ct = new wangPoint(s.getCenterX(), s.getCenterY());
+						pt = wangUtils.getRotatedPoint(pt, cos, sin, ct);
+					}
+					
+					this.connectorImg.style.left = (pt.x - this.connectorImg.offsetWidth / 2) + 'px';
+					this.connectorImg.style.top = (pt.y - this.connectorImg.offsetHeight / 2) + 'px';
+				}
+			};
+			
+			var vertexHandlerDestroy = wangVertexHandler.prototype.destroy;
+			wangVertexHandler.prototype.destroy = function(sender, me)
+			{
+				vertexHandlerDestroy.apply(this, arguments);
+	
+				if (this.connectorImg != null)
+				{
+					this.connectorImg.parentNode.removeChild(this.connectorImg);
+					this.connectorImg = null;
+				}
+			};
+			
+			// Pre-fetches touch connector
+			new Image().src = connectorSrc;
+		})();
+	</script>
+</head>
+
+<!-- Page passes the container for the graph to the program -->
+<body onload="main(document.getElementById('graphContainer'))">
+
+	<!-- Creates a container for the graph with a grid wallpaper -->
+	<div id="graphContainer"
+		style="position:relative;overflow:hidden;width:640px;height:480px;background:url('editors/images/grid.gif');cursor:default;">
+	</div>
+</body>
+</html>

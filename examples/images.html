@@ -1,0 +1,128 @@
+<!--
+  Copyright (c) 2006-2013, JGraph Ltd
+  
+  Images example for wangGraph. This example demonstrates using
+  background images and images for for the label- and image-shape.
+-->
+<html>
+<head>
+	<title>Images example for wangGraph</title>
+
+	<!-- Sets the basepath for the library if not in same directory -->
+	<script type="text/javascript">
+		wangBasePath = '../dist';
+	</script>
+
+	<!-- Loads and initializes the library -->
+	<script type="text/javascript" src="../dist/wangGraph.umd.js"></script>
+
+	<!-- Example code -->
+	<script type="text/javascript">
+		Object.keys(window.wGraph).forEach(wangGraphClassName => { window[wangGraphClassName] = window.wGraph[wangGraphClassName]; });
+		// Program starts here. Creates a sample graph in the
+		// DOM node with the specified ID. This function is invoked
+		// from the onLoad event handler of the document (see below).
+		function main(container)
+		{
+			// Checks if the browser is supported
+			if (!wangClient.isBrowserSupported())
+			{
+				// Displays an error message if the browser is not supported.
+				wangUtils.error('Browser is not supported!', 200, false);
+			}
+			else
+			{
+				// Creates the graph inside the given container
+				var graph = new wangGraph(container);
+
+				// Sets a background image and restricts child movement to its bounds
+				graph.setBackgroundImage(new wangImage('images/gradient_background.jpg', 360, 200));
+				graph.maximumGraphBounds = new wangRectangle(0, 0, 360, 200);
+
+				// Resizes the container but never make it bigger than the background
+				graph.minimumContainerSize = new wangRectangle(0, 0, 360, 200);
+				graph.setResizeContainer(true);
+
+				// Disables basic selection and cell handling
+				//graph.setEnabled(false);
+				configureStylesheet(graph);
+				
+				// Gets the default parent for inserting new cells. This
+				// is normally the first child of the root (ie. layer 0).
+				var parent = graph.getDefaultParent();
+								
+				// Adds cells to the model in a single step
+				graph.getModel().beginUpdate();
+				try
+				{
+					var v1 = graph.insertVertex(parent, null, 'First Line\nSecond Line', 20, 10, 80, 100, 'bottom');
+					var v1 = graph.insertVertex(parent, null, 'First Line\nSecond Line', 130, 10, 80, 100, 'top');
+					var v1 = graph.insertVertex(parent, null, '', 230, 10, 100, 100, 'image');
+					var v2 = graph.insertVertex(parent, null, 'First Line\nSecond Line', 20, 130, 140, 60, 'right');
+					var v2 = graph.insertVertex(parent, null, 'First Line\nSecond Line', 180, 130, 140, 60, 'left');
+				}
+				finally
+				{
+					// Updates the display
+					graph.getModel().endUpdate();
+				}
+			}
+		};
+		
+		function configureStylesheet(graph)
+		{
+			var style = new Object();
+			style[wangConstants.STYLE_SHAPE] = wangConstants.SHAPE_IMAGE;
+			style[wangConstants.STYLE_PERIMETER] = wangPerimeter.RectanglePerimeter;
+			style[wangConstants.STYLE_IMAGE] = 'images/icons48/keys.png';
+			style[wangConstants.STYLE_FONTCOLOR] = '#FFFFFF';
+			graph.getStylesheet().putCellStyle('image', style);
+			
+			style = wangUtils.clone(style);
+			style[wangConstants.STYLE_SHAPE] = wangConstants.SHAPE_LABEL;
+			style[wangConstants.STYLE_STROKECOLOR] = '#000000';
+			style[wangConstants.STYLE_ALIGN] = wangConstants.ALIGN_CENTER;
+			style[wangConstants.STYLE_VERTICAL_ALIGN] = wangConstants.ALIGN_TOP;
+			style[wangConstants.STYLE_IMAGE_ALIGN] = wangConstants.ALIGN_CENTER;
+			style[wangConstants.STYLE_IMAGE_VERTICAL_ALIGN] = wangConstants.ALIGN_TOP;
+			style[wangConstants.STYLE_IMAGE] = 'images/icons48/gear.png';
+			style[wangConstants.STYLE_IMAGE_WIDTH] = '48';
+			style[wangConstants.STYLE_IMAGE_HEIGHT] = '48';
+			style[wangConstants.STYLE_SPACING_TOP] = '56';
+			style[wangConstants.STYLE_SPACING] = '8';
+			graph.getStylesheet().putCellStyle('bottom', style);
+			
+			style = wangUtils.clone(style);
+			style[wangConstants.STYLE_IMAGE_VERTICAL_ALIGN] = wangConstants.ALIGN_BOTTOM;
+			style[wangConstants.STYLE_IMAGE] = 'images/icons48/server.png';
+			delete style[wangConstants.STYLE_SPACING_TOP];
+			graph.getStylesheet().putCellStyle('top', style);
+			
+			style = wangUtils.clone(style);
+			style[wangConstants.STYLE_ALIGN] = wangConstants.ALIGN_LEFT;
+			style[wangConstants.STYLE_IMAGE_ALIGN] = wangConstants.ALIGN_LEFT;
+			style[wangConstants.STYLE_VERTICAL_ALIGN] = wangConstants.ALIGN_MIDDLE;
+			style[wangConstants.STYLE_IMAGE_VERTICAL_ALIGN] = wangConstants.ALIGN_MIDDLE;
+			style[wangConstants.STYLE_IMAGE] = 'images/icons48/earth.png';
+			style[wangConstants.STYLE_SPACING_LEFT] = '55';
+			style[wangConstants.STYLE_SPACING] = '4';
+			graph.getStylesheet().putCellStyle('right', style);
+			
+			style = wangUtils.clone(style);
+			style[wangConstants.STYLE_ALIGN] = wangConstants.ALIGN_RIGHT;
+			style[wangConstants.STYLE_IMAGE_ALIGN] = wangConstants.ALIGN_RIGHT;
+			delete style[wangConstants.STYLE_SPACING_LEFT];
+			style[wangConstants.STYLE_SPACING_RIGHT] = '55';
+			graph.getStylesheet().putCellStyle('left', style);
+		};
+	</script>
+</head>
+
+<!-- Page passes the container for the graph to the program -->
+<body onload="main(document.getElementById('graphContainer'))">
+
+	<!-- Creates a container for the graph -->
+	<div id="graphContainer" style="position:relative;overflow:hidden;width:360px;height:200px;cursor:default;">
+	</div>
+</body>
+</html>

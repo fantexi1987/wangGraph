@@ -1,0 +1,36 @@
+<wangEditor>
+	<ui>
+		<add as="graph" element="graph"/>
+		<add as="toolbar" element="toolbox"/>
+	</ui>
+	<Array as="templates">
+		<add as="myFirstTemplate">
+			<Rect label="Rectangle" href="">
+				<wangCell vertex="1">	
+					<wangGeometry as="geometry" width="80" height="40"/>
+				</wangCell>
+			</Rect>
+		</add>
+	</Array>
+	<Array as="actions">
+		<add as="myFirstAction"><![CDATA[
+			function (editor, cell)
+			{
+				var encoder = new wangCodec();
+				var node = encoder.encode(editor.graph.getModel());
+				wangUtils.popup(wangUtils.getPrettyXml(node), true);
+			}
+		]]></add>
+	</Array>
+	<wangDefaultToolbar as="toolbar">
+		<add as="MyFirstAction" action="myFirstAction" icon="images/icons48/gear.png"/>
+		<hr/><br/>
+		<add as="Gear" template="myFirstTemplate" style="rounded=1" icon="images/icons48/server.png"/>
+		<add as="Earth" template="myFirstTemplate" style="shape=ellipse" icon="images/icons48/earth.png"/>
+	</wangDefaultToolbar>
+	<wangDefaultPopupMenu as="popupHandler">	
+		<add as="Show XML (Custom)" action="myFirstAction" icon="images/icons48/gear.png"/>
+		<separator/>
+		<add as="Delete (Built-in)" action="delete" icon="images/icons48/keys.png" if="cell"/>
+	</wangDefaultPopupMenu>
+</wangEditor>
