@@ -1,20 +1,20 @@
 <!--
   Copyright (c) 2006-2017, JGraph Ltd
   
-  Animation example for mxGraph. This example demonstrates using
+  Animation example for wangGraph. This example demonstrates using
   SVG animations on edges to visualize the flow in a pipe.
 -->
 <html>
 <head>
-	<title>Animation example for mxGraph</title>
+	<title>Animation example for wangGraph</title>
 
 	<!-- Sets the basepath for the library if not in same directory -->
 	<script type="text/javascript">
-		mxBasePath = '../dist';
+		wangBasePath = '../dist';
 	</script>
 
 	<!-- Loads and initializes the library -->
-	<script type="text/javascript" src="../dist/mxgraph.umd.js"></script>
+	<script type="text/javascript" src="../dist/wanggraph.umd.js"></script>
 
 	<style type="text/css">
 		.flow {
@@ -31,10 +31,10 @@
 	
 	<!-- Example code -->
 	<script type="text/javascript">
-		Object.keys(window.mxgraph).forEach(mxGraphClassName => { window[mxGraphClassName] = window.mxgraph[mxGraphClassName]; });
+		Object.keys(window.wGraph).forEach(wangGraphClassName => { window[wangGraphClassName] = window.wGraph[wangGraphClassName]; });
 		function main(container)
 		{
-			var graph = new mxGraph(container);
+			var graph = new wangGraph(container);
 			graph.setEnabled(false);
 			var parent = graph.getDefaultParent();
 
@@ -48,7 +48,7 @@
 				var v2 = graph.insertVertex(parent, null, 'Tank', 200, 150, 60, 60,vertexStyle);
 				var e1 = graph.insertEdge(parent, null, '', v1, v2,
 					'strokeWidth=3;endArrow=block;endSize=2;endFill=1;strokeColor=black;rounded=1;');
-				e1.geometry.points = [new mxPoint(230, 50)];
+				e1.geometry.points = [new wangPoint(230, 50)];
 				graph.orderCells(true, [e1]);
 			}
 			finally

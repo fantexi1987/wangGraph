@@ -1,29 +1,29 @@
 <!--
   Copyright (c) 2006-2013, JGraph Ltd
   
-  Consistuent example for mxGraph. This example demonstrates using
+  Consistuent example for wangGraph. This example demonstrates using
   cells as parts of other cells.
 -->
 <html>
 <head>
-	<title>Consistuent example for mxGraph</title>
+	<title>Consistuent example for wangGraph</title>
 
 	<!-- Sets the basepath for the library if not in same directory -->
 	<script type="text/javascript">
-		mxBasePath = '../dist';
+		wangBasePath = '../dist';
 	</script>
 
 	<!-- Loads and initializes the library -->
-	<script type="text/javascript" src="../dist/mxgraph.umd.js"></script>
+	<script type="text/javascript" src="../dist/wanggraph.umd.js"></script>
 
 	<!-- Example code -->
 	<script type="text/javascript">
-		Object.keys(window.mxgraph).forEach(mxGraphClassName => { window[mxGraphClassName] = window.mxgraph[mxGraphClassName]; });
+		Object.keys(window.wGraph).forEach(wangGraphClassName => { window[wangGraphClassName] = window.wGraph[wangGraphClassName]; });
 		/**
 		 * Redirects start drag to parent.
 		 */
-		var graphHandlerGetInitialCellForEvent = mxGraphHandler.prototype.getInitialCellForEvent;
-		mxGraphHandler.prototype.getInitialCellForEvent = function(me)
+		var graphHandlerGetInitialCellForEvent = wangGraphHandler.prototype.getInitialCellForEvent;
+		wangGraphHandler.prototype.getInitialCellForEvent = function(me)
 		{
 			var cell = graphHandlerGetInitialCellForEvent.apply(this, arguments);
 			
@@ -41,18 +41,18 @@
 		function main(container)
 		{
 			// Checks if the browser is supported
-			if (!mxClient.isBrowserSupported())
+			if (!wangClient.isBrowserSupported())
 			{
 				// Displays an error message if the browser is not supported.
-				mxUtils.error('Browser is not supported!', 200, false);
+				wangUtils.error('Browser is not supported!', 200, false);
 			}
 			else
 			{
 				// Disables the built-in context menu
-				mxEvent.disableContextMenu(container);
+				wangEvent.disableContextMenu(container);
 				
 				// Creates the graph inside the given container
-				var graph = new mxGraph(container);
+				var graph = new wangGraph(container);
 				graph.foldingEnabled = false;
 				graph.recursiveResize = true;
 				
@@ -70,11 +70,11 @@
 						cell = this.model.getParent(cell);
 					}
 					
-					mxGraph.prototype.selectCellForEvent.apply(this, arguments);
+					wangGraph.prototype.selectCellForEvent.apply(this, arguments);
 				};
 				
 				// Enables rubberband selection
-				new mxRubberband(graph);
+				new wangRubberband(graph);
 				
 				// Gets the default parent for inserting new cells. This
 				// is normally the first child of the root (ie. layer 0).

@@ -1,4 +1,4 @@
-<mxGraph alternateEdgeStyle="verticalEdge" dropEnabled="1">
+<wangGraph alternateEdgeStyle="verticalEdge" dropEnabled="1">
 	<add as="isAutoSizeCell"><![CDATA[
 		function(cell)
 		{
@@ -8,7 +8,7 @@
 	<add as="isSwimlane"><![CDATA[
 		function (cell)
 		{
-			return mxUtils.isNode(this.model.getValue(cell), 'swimlane');
+			return wangUtils.isNode(this.model.getValue(cell), 'swimlane');
 		}
 	]]></add>
 	<add as="isAllowOverlapParent"><![CDATA[
@@ -49,7 +49,7 @@
 			return cell.getAttribute('label');
 		}
 	</add>
-	<mxGraphModel as="model">
+	<wangGraphModel as="model">
 		<add as="valueForCellChanged"><![CDATA[
 			function(cell, value)
 			{
@@ -72,11 +72,11 @@
 		<root>
 			<Workflow label="MyWorkflow" description="" href="" id="0"/>
 			<Layer label="Default Layer">
-				<mxCell parent="0"/>
+				<wangCell parent="0"/>
 			</Layer>
 		</root>
-	</mxGraphModel>
-	<mxStylesheet as="stylesheet">
+	</wangGraphModel>
+	<wangStylesheet as="stylesheet">
 		<add as="defaultVertex">
 			<add as="shape" value="label"/>
 			<add as="perimeter" value="rectanglePerimeter"/>
@@ -148,5 +148,5 @@
 			<add as="verticalAlign" value="top"/>
 			<add as="verticalLabelPosition" value="bottom"/>
 		</add>
-	</mxStylesheet>
-</mxGraph>
+	</wangStylesheet>
+</wangGraph>

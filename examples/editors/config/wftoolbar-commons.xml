@@ -1,4 +1,4 @@
-<mxDefaultToolbar>
+<wangDefaultToolbar>
 	<add as="save" action="save" icon="images/save.gif"/>
 	<add as="show" action="show" icon="images/preview.gif"/>
 	<add as="print" action="print" icon="images/print.gif"/>
@@ -71,4 +71,4 @@
 	<add as="tasks" action="toggleTasks" icon="images/tasks.gif"/>
 	<add as="help" action="toggleHelp" icon="images/help.gif"/>
 	<add as="console" action="toggleConsole" icon="images/console.gif"/>
-</mxDefaultToolbar>
+</wangDefaultToolbar>

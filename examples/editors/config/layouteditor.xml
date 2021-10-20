@@ -1,4 +1,4 @@
-<mxEditor layoutDiagram="1" layoutSwimlanes="1" maintainSwimlanes="1">
+<wangEditor layoutDiagram="1" layoutSwimlanes="1" maintainSwimlanes="1">
 	<include name="config/wfeditor-commons.xml"/>
 	<ui>
 		<add as="graph" element="graph"
@@ -10,15 +10,15 @@
 	<Array as="templates">
 		<add as="swimlane">
 			<Swimlane label="Swimlane" customAttribute="text value">
-				<mxCell vertex="1" style="swimlane;horizontal=1" connectable="0">
-					<mxGeometry as="geometry" width="190" height="400"/>
-				</mxCell>
+				<wangCell vertex="1" style="swimlane;horizontal=1" connectable="0">
+					<wangGeometry as="geometry" width="190" height="400"/>
+				</wangCell>
 			</Swimlane>
 		</add>
 	</Array>
-	<mxGraph as="graph" swimlaneNesting="0">
+	<wangGraph as="graph" swimlaneNesting="0">
 		<include name="config/wfgraph-commons.xml"/>
-		<mxStylesheet as="stylesheet">
+		<wangStylesheet as="stylesheet">
 			<add as="defaultEdge">
 				<add as="shape" value="connector"/>
 				<add as="elbow" value="vertical"/>
@@ -28,9 +28,9 @@
 				<add as="edgeStyle" value="elbowEdgeStyle"/>
 				<add as="endArrow" value="classic"/>
 			</add>
-		</mxStylesheet>
-	</mxGraph>
-	<mxDefaultToolbar as="toolbar">
+		</wangStylesheet>
+	</wangGraph>
+	<wangDefaultToolbar as="toolbar">
 		<include name="config/wftoolbar-commons.xml"/>
-	</mxDefaultToolbar>
-</mxEditor>
+	</wangDefaultToolbar>
+</wangEditor>

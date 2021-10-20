@@ -1,4 +1,4 @@
-<mxEditor defaultGroup="group" defaultEdge="edge"
+<wangEditor defaultGroup="group" defaultEdge="edge"
 	layoutDiagram="1" maintainSwimlanes="1"
 	swimlaneRequired="1" forcedInserting="1"
 	helpWindowImage="images/help.gif"
@@ -29,49 +29,49 @@
 	<Array as="templates">
 		<add as="group">
 			<Group label="" description="">
-				<mxCell vertex="1" style="group" connectable="0"/>
+				<wangCell vertex="1" style="group" connectable="0"/>
 			</Group>
 		</add>
 		<add as="edge">
 			<Edge label="" description="">
-				<mxCell edge="1">
-					<mxGeometry as="geometry" isRelative="1"/>
-				</mxCell>
+				<wangCell edge="1">
+					<wangGeometry as="geometry" isRelative="1"/>
+				</wangCell>
 			</Edge>
 		</add>
 		<add as="swimlane">
 			<Swimlane label="Role" customAttribute="text value">
-				<mxCell vertex="1" style="swimlane" connectable="0">
-					<mxGeometry as="geometry" width="220" height="480"/>
-				</mxCell>
+				<wangCell vertex="1" style="swimlane" connectable="0">
+					<wangGeometry as="geometry" width="220" height="480"/>
+				</wangCell>
 			</Swimlane>
 		</add>
 		<add as="task">
 			<Task label="Task">
-				<mxCell vertex="1">	
-					<mxGeometry as="geometry" width="80" height="30"/>
-				</mxCell>
+				<wangCell vertex="1">	
+					<wangGeometry as="geometry" width="80" height="30"/>
+				</wangCell>
 			</Task>
 		</add>
 		<add as="subprocess">
 			<Subprocess label="Subprocess">
-				<mxCell vertex="1" style="rounded">		
-					<mxGeometry as="geometry" width="80" height="30"/>
-				</mxCell>
+				<wangCell vertex="1" style="rounded">		
+					<wangGeometry as="geometry" width="80" height="30"/>
+				</wangCell>
 			</Subprocess>
 		</add>
 		<add as="shape">
 			<Shape label="Element">
-				<mxCell vertex="1" style="ellipse">		
-					<mxGeometry as="geometry" width="60" height="50"/>
-				</mxCell>
+				<wangCell vertex="1" style="ellipse">		
+					<wangGeometry as="geometry" width="60" height="50"/>
+				</wangCell>
 			</Shape>
 		</add>
 		<add as="hline">
 			<Shape label="">
-				<mxCell vertex="1" style="ellipse">		
-					<mxGeometry as="geometry" width="60" height="10"/>
-				</mxCell>
+				<wangCell vertex="1" style="ellipse">		
+					<wangGeometry as="geometry" width="60" height="10"/>
+				</wangCell>
 			</Shape>
 		</add>
 	</Array>
@@ -86,49 +86,49 @@
 				
 				if (layer == null || layer.getChildCount() == 0)
 				{
-					mxUtils.para(div, 'Examples:');
-					mxUtils.linkInvoke(div, 'Withdrawal', this, 'open',
+					wangUtils.para(div, 'Examples:');
+					wangUtils.linkInvoke(div, 'Withdrawal', this, 'open',
 						'diagrams/withdrawal.xml', off);
-					mxUtils.br(div);
+					wangUtils.br(div);
 				}
 				else
 				{
-					mxUtils.para(div, 'Clipboard:');
+					wangUtils.para(div, 'Clipboard:');
 					
 					if (!this.graph.isSelectionEmpty())
 					{
-						mxUtils.linkAction(div, 'Copy to Clipboard', this, 'copy', off);
-						mxUtils.br(div);
+						wangUtils.linkAction(div, 'Copy to Clipboard', this, 'copy', off);
+						wangUtils.br(div);
 					}
 					
-					mxUtils.linkAction(div, 'Paste from Clipboard', this, 'paste', off);
-					mxUtils.br(div);
+					wangUtils.linkAction(div, 'Paste from Clipboard', this, 'paste', off);
+					wangUtils.br(div);
 					
 					if (!this.graph.isSelectionEmpty())
 					{
-						mxUtils.linkAction(div, 'Delete Selected Cells', this, 'delete', off);
-						mxUtils.br(div);
-						mxUtils.linkAction(div, 'Clear Selection', this, 'selectNone', off);
-						mxUtils.br(div);
+						wangUtils.linkAction(div, 'Delete Selected Cells', this, 'delete', off);
+						wangUtils.br(div);
+						wangUtils.linkAction(div, 'Clear Selection', this, 'selectNone', off);
+						wangUtils.br(div);
 					}
 					else
 					{
-						mxUtils.linkAction(div, 'Select All Cells', this, 'selectAll', off);
-						mxUtils.br(div);
+						wangUtils.linkAction(div, 'Select All Cells', this, 'selectAll', off);
+						wangUtils.br(div);
 					}
 					
-					mxUtils.para(div, 'History:');
-					mxUtils.linkAction(div, 'Undo Last Change', this, 'undo', off);
-					mxUtils.br(div);
-					mxUtils.linkAction(div, 'Redo Last Change', this, 'redo', off);
-					mxUtils.br(div);
+					wangUtils.para(div, 'History:');
+					wangUtils.linkAction(div, 'Undo Last Change', this, 'undo', off);
+					wangUtils.br(div);
+					wangUtils.linkAction(div, 'Redo Last Change', this, 'redo', off);
+					wangUtils.br(div);
 				}
 				
-				mxUtils.br(div);
+				wangUtils.br(div);
 			}
 		}
 	]]></add>
-	<mxGraph as="graph" alternateEdgeStyle="verticalEdge"
+	<wangGraph as="graph" alternateEdgeStyle="verticalEdge"
 		swimlaneNesting="0" dropEnabled="1">
 		<add as="isAutoSizeCell"><![CDATA[
 			function(cell)
@@ -152,7 +152,7 @@
 		<add as="isSwimlane">
 			function (cell)
 			{
-				return mxUtils.isNode(this.model.getValue(cell), 'swimlane');
+				return wangUtils.isNode(this.model.getValue(cell), 'swimlane');
 			}
 		</add>
 		<add as="isAllowOverlapParent">
@@ -177,7 +177,7 @@
 				return cell.getAttribute('label');
 			}
 		]]></add>
-		<mxStylesheet as="stylesheet">
+		<wangStylesheet as="stylesheet">
 			<add as="defaultVertex">
 				<add as="shape" value="rectangle"/>
 				<add as="perimeter" value="rectanglePerimeter"/>
@@ -265,8 +265,8 @@
 				<add as="verticalAlign" value="bottom"/>
 				<add as="strokeColor" value="indicated"/>
 			</add>
-		</mxStylesheet>
-		<mxGraphModel as="model">
+		</wangStylesheet>
+		<wangGraphModel as="model">
 			<add as="valueForCellChanged"><![CDATA[
 				function(cell, value)
 				{
@@ -289,12 +289,12 @@
 			<root>
 				<Workflow label="MyWorkflow" id="0"/>
 				<Layer label="Default Layer">
-					<mxCell parent="0"/>
+					<wangCell parent="0"/>
 				</Layer>
 			</root>
-		</mxGraphModel>
-	</mxGraph>
-	<mxDefaultToolbar as="toolbar">
+		</wangGraphModel>
+	</wangGraph>
+	<wangDefaultToolbar as="toolbar">
 		<add as="Save" action="save" icon="images/save.gif"/>
 		<separator/>
 		<add as="Undo" action="undo" icon="images/undo.gif"/>
@@ -329,5 +329,5 @@
 		<add as="Tasks" action="toggleTasks" icon="images/tasks.gif"/>
 		<add as="Help" action="toggleHelp" icon="images/help.gif"/>
 		<add as="Console" action="toggleConsole" icon="images/console.gif"/>
-	</mxDefaultToolbar>
-</mxEditor>
+	</wangDefaultToolbar>
+</wangEditor>

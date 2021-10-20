@@ -1,49 +1,49 @@
 <!--
   Copyright (c) 2006-2013, JGraph Ltd
   
-  Control example for mxGraph. This example demonstrates adding
+  Control example for wangGraph. This example demonstrates adding
   controls to specific cells in a graph.
 -->
 <html>
 <head>
-	<title>Control example for mxGraph</title>
+	<title>Control example for wangGraph</title>
 
 	<!-- Sets the basepath for the library if not in same directory -->
 	<script type="text/javascript">
-		mxBasePath = '../dist';
+		wangBasePath = '../dist';
 	</script>
 
 	<!-- Loads and initializes the library -->
-	<script type="text/javascript" src="../dist/mxgraph.umd.js"></script>
+	<script type="text/javascript" src="../dist/wanggraph.umd.js"></script>
 
 	<!-- Example code -->
 	<script type="text/javascript">
-		Object.keys(window.mxgraph).forEach(mxGraphClassName => { window[mxGraphClassName] = window.mxgraph[mxGraphClassName]; });
+		Object.keys(window.wGraph).forEach(wangGraphClassName => { window[wangGraphClassName] = window.wGraph[wangGraphClassName]; });
 		// Program starts here. Creates a sample graph in the
 		// DOM node with the specified ID. This function is invoked
 		// from the onLoad event handler of the document (see below).
 		function main(container)
 		{
 			// Checks if the browser is supported
-			if (!mxClient.isBrowserSupported())
+			if (!wangClient.isBrowserSupported())
 			{
 				// Displays an error message if the browser is not supported.
-				mxUtils.error('Browser is not supported!', 200, false);
+				wangUtils.error('Browser is not supported!', 200, false);
 			}
 			else
 			{
 				// Creates the graph inside the given container
-				var graph = new mxGraph(container);
+				var graph = new wangGraph(container);
 				graph.setPanning(true);
 				
 				// Specifies the URL and size of the new control
-				var deleteImage = new mxImage('editors/images/overlays/forbidden.png', 16, 16);
+				var deleteImage = new wangImage('editors/images/overlays/forbidden.png', 16, 16);
 
 				// Overridden to add an additional control to the state at creation time
-				mxCellRendererCreateControl = mxCellRenderer.prototype.createControl;
-				mxCellRenderer.prototype.createControl = function(state)
+				wangCellRendererCreateControl = wangCellRenderer.prototype.createControl;
+				wangCellRenderer.prototype.createControl = function(state)
 				{
-					mxCellRendererCreateControl.apply(this, arguments);
+					wangCellRendererCreateControl.apply(this, arguments);
 					
 					var graph = state.view.graph;
 					
@@ -51,8 +51,8 @@
 					{
 						if (state.deleteControl == null)
 						{
-							var b = new mxRectangle(0, 0, deleteImage.width, deleteImage.height);
-							state.deleteControl = new mxImageShape(b, deleteImage.src);
+							var b = new wangRectangle(0, 0, deleteImage.width, deleteImage.height);
+							state.deleteControl = new wangImageShape(b, deleteImage.src);
 							state.deleteControl.dialect = graph.dialect;
 							state.deleteControl.preserveImageAspect = false;
 							
@@ -61,7 +61,7 @@
 								if (graph.isEnabled())
 								{
 									graph.removeCells([state.cell]);
-									mxEvent.consume(evt);
+									wangEvent.consume(evt);
 								}
 							});
 						}
@@ -84,9 +84,9 @@
 						var s = state.view.scale;			
 
 						return (state.view.graph.getModel().isEdge(state.cell)) ? 
-							new mxRectangle(state.x + state.width / 2 - w / 2 * s,
+							new wangRectangle(state.x + state.width / 2 - w / 2 * s,
 								state.y + state.height / 2 - h / 2 * s, w * s, h * s)
-							: new mxRectangle(state.x + state.width - w * s,
+							: new wangRectangle(state.x + state.width - w * s,
 								state.y, w * s, h * s);
 					}
 					
@@ -94,10 +94,10 @@
 				};
 				
 				// Overridden to update the scale and bounds of the control
-				mxCellRendererRedrawControl = mxCellRenderer.prototype.redrawControl;
-				mxCellRenderer.prototype.redrawControl = function(state)
+				wangCellRendererRedrawControl = wangCellRenderer.prototype.redrawControl;
+				wangCellRenderer.prototype.redrawControl = function(state)
 				{
-					mxCellRendererRedrawControl.apply(this, arguments);
+					wangCellRendererRedrawControl.apply(this, arguments);
 					
 					if (state.deleteControl != null)
 					{
@@ -114,10 +114,10 @@
 				};
 				
 				// Overridden to remove the control if the state is destroyed
-				mxCellRendererDestroy = mxCellRenderer.prototype.destroy;
-				mxCellRenderer.prototype.destroy = function(state)
+				wangCellRendererDestroy = wangCellRenderer.prototype.destroy;
+				wangCellRenderer.prototype.destroy = function(state)
 				{
-					mxCellRendererDestroy.apply(this, arguments);
+					wangCellRendererDestroy.apply(this, arguments);
 
 					if (state.deleteControl != null)
 					{
@@ -131,7 +131,7 @@
 				//graph.setResizeContainer(true);
 				
 				// Enables rubberband selection
-				new mxRubberband(graph);
+				new wangRubberband(graph);
 				
 				// Gets the default parent for inserting new cells. This
 				// is normally the first child of the root (ie. layer 0).
@@ -153,12 +153,12 @@
 				
 				graph.centerZoom = false;
 				
-				document.body.appendChild(mxUtils.button('Zoom In', function()
+				document.body.appendChild(wangUtils.button('Zoom In', function()
 				{
 					graph.zoomIn();
 				}));
 				
-				document.body.appendChild(mxUtils.button('Zoom Out', function()
+				document.body.appendChild(wangUtils.button('Zoom Out', function()
 				{
 					graph.zoomOut();
 				}));

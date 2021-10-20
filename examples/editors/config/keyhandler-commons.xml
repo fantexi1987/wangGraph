@@ -1,5 +1,5 @@
-<mxEditor>
-	<mxDefaultKeyHandler as="keyHandler">
+<wangEditor>
+	<wangDefaultKeyHandler as="keyHandler">
 		<add as="8" action="collapse"/>
 		<add as="13" action="expand"/>
 		<add as="33" action="exitGroup"/>
@@ -23,5 +23,5 @@
 		<add as="123" action="showProperties"/>
 		<add as="107" action="zoomIn"/>
 		<add as="109" action="zoomOut"/>
-	</mxDefaultKeyHandler>
-</mxEditor>
+	</wangDefaultKeyHandler>
+</wangEditor>

@@ -1,39 +1,39 @@
 <!--
   Copyright (c) 2006-2013, JGraph Ltd
   
-  Context icons example for mxGraph. This example demonstrates adding
+  Context icons example for wangGraph. This example demonstrates adding
   icons to selected vertices to carry out special operations.
 -->
 <html>
 <head>
-	<title>Context icons example for mxGraph</title>
+	<title>Context icons example for wangGraph</title>
 
 	<!-- Sets the basepath for the library if not in same directory -->
 	<script type="text/javascript">
-		mxBasePath = '../dist';
+		wangBasePath = '../dist';
 	</script>
 
 	<!-- Loads and initializes the library -->
-	<script type="text/javascript" src="../dist/mxgraph.umd.js"></script>
+	<script type="text/javascript" src="../dist/wanggraph.umd.js"></script>
 
 	<!-- Example code -->
 	<script type="text/javascript">
-		Object.keys(window.mxgraph).forEach(mxGraphClassName => { window[mxGraphClassName] = window.mxgraph[mxGraphClassName]; });
-		// Defines a subclass for mxVertexHandler that adds a set of clickable
+		Object.keys(window.wGraph).forEach(wangGraphClassName => { window[wangGraphClassName] = window.wGraph[wangGraphClassName]; });
+		// Defines a subclass for wangVertexHandler that adds a set of clickable
 		// icons to every selected vertex.
-		function mxVertexToolHandler(state)
+		function wangVertexToolHandler(state)
 		{
-			mxVertexHandler.apply(this, arguments);
+			wangVertexHandler.apply(this, arguments);
 		};
 
-		mxVertexToolHandler.prototype = new mxVertexHandler();
-		mxVertexToolHandler.prototype.constructor = mxVertexToolHandler;
+		wangVertexToolHandler.prototype = new wangVertexHandler();
+		wangVertexToolHandler.prototype.constructor = wangVertexToolHandler;
 
-		mxVertexToolHandler.prototype.domNode = null;
+		wangVertexToolHandler.prototype.domNode = null;
 
-		mxVertexToolHandler.prototype.init = function()
+		wangVertexToolHandler.prototype.init = function()
 		{
-			mxVertexHandler.prototype.init.apply(this, arguments);
+			wangVertexHandler.prototype.init.apply(this, arguments);
 
 			// In this example we force the use of DIVs for images in IE. This
 			// handles transparency in PNG images properly in IE and fixes the
@@ -46,19 +46,19 @@
 			// Workaround for event redirection via image tag in quirks and IE8
 			function createImage(src)
 			{
-				if (mxClient.IS_IE && !mxClient.IS_SVG)
+				if (wangClient.IS_IE && !wangClient.IS_SVG)
 				{
 					var img = document.createElement('div');
 					img.style.backgroundImage = 'url(' + src + ')';
 					img.style.backgroundPosition = 'center';
 					img.style.backgroundRepeat = 'no-repeat';
-					img.style.display = (mxClient.IS_QUIRKS) ? 'inline' : 'inline-block';
+					img.style.display = (wangClient.IS_QUIRKS) ? 'inline' : 'inline-block';
 					
 					return img;
 				}
 				else
 				{
-					return mxUtils.createImage(src);
+					return wangUtils.createImage(src);
 				}
 			};
 
@@ -68,18 +68,18 @@
 			img.style.cursor = 'pointer';
 			img.style.width = '16px';
 			img.style.height = '16px';
-			mxEvent.addGestureListeners(img,
-				mxUtils.bind(this, function(evt)
+			wangEvent.addGestureListeners(img,
+				wangUtils.bind(this, function(evt)
 				{
 					// Disables dragging the image
-					mxEvent.consume(evt);
+					wangEvent.consume(evt);
 				})
 			);
-			mxEvent.addListener(img, 'click',
-				mxUtils.bind(this, function(evt)
+			wangEvent.addListener(img, 'click',
+				wangUtils.bind(this, function(evt)
 				{
 					this.graph.removeCells([this.state.cell]);
-					mxEvent.consume(evt);
+					wangEvent.consume(evt);
 				})
 			);
 			this.domNode.appendChild(img);
@@ -90,13 +90,13 @@
 			img.style.cursor = 'se-resize';
 			img.style.width = '16px';
 			img.style.height = '16px';
-			mxEvent.addGestureListeners(img,
-				mxUtils.bind(this, function(evt)
+			wangEvent.addGestureListeners(img,
+				wangUtils.bind(this, function(evt)
 				{
-					this.start(mxEvent.getClientX(evt), mxEvent.getClientY(evt), 7);
+					this.start(wangEvent.getClientX(evt), wangEvent.getClientY(evt), 7);
 					this.graph.isMouseDown = true;
-					this.graph.isMouseTrigger = mxEvent.isMouseEvent(evt);
-					mxEvent.consume(evt);
+					this.graph.isMouseTrigger = wangEvent.isMouseEvent(evt);
+					wangEvent.consume(evt);
 				})
 			);
 			this.domNode.appendChild(img);
@@ -107,15 +107,15 @@
 			img.style.cursor = 'move';
 			img.style.width = '16px';
 			img.style.height = '16px';
-			mxEvent.addGestureListeners(img,
-				mxUtils.bind(this, function(evt)
+			wangEvent.addGestureListeners(img,
+				wangUtils.bind(this, function(evt)
 				{
 					this.graph.graphHandler.start(this.state.cell,
-						mxEvent.getClientX(evt), mxEvent.getClientY(evt));
+						wangEvent.getClientX(evt), wangEvent.getClientY(evt));
 					this.graph.graphHandler.cellWasClicked = true;
 					this.graph.isMouseDown = true;
-					this.graph.isMouseTrigger = mxEvent.isMouseEvent(evt);
-					mxEvent.consume(evt);
+					this.graph.isMouseTrigger = wangEvent.isMouseEvent(evt);
+					wangEvent.consume(evt);
 				})
 			);
 			this.domNode.appendChild(img);
@@ -126,15 +126,15 @@
 			img.style.cursor = 'pointer';
 			img.style.width = '16px';
 			img.style.height = '16px';
-			mxEvent.addGestureListeners(img,
-				mxUtils.bind(this, function(evt)
+			wangEvent.addGestureListeners(img,
+				wangUtils.bind(this, function(evt)
 				{
-					var pt = mxUtils.convertPoint(this.graph.container,
-							mxEvent.getClientX(evt), mxEvent.getClientY(evt));
+					var pt = wangUtils.convertPoint(this.graph.container,
+							wangEvent.getClientX(evt), wangEvent.getClientY(evt));
 					this.graph.connectionHandler.start(this.state, pt.x, pt.y);
 					this.graph.isMouseDown = true;
-					this.graph.isMouseTrigger = mxEvent.isMouseEvent(evt);
-					mxEvent.consume(evt);
+					this.graph.isMouseTrigger = wangEvent.isMouseEvent(evt);
+					wangEvent.consume(evt);
 				})
 			);
 			this.domNode.appendChild(img);
@@ -143,25 +143,25 @@
 			this.redrawTools();
 		};
 
-		mxVertexToolHandler.prototype.redraw = function()
+		wangVertexToolHandler.prototype.redraw = function()
 		{
-			mxVertexHandler.prototype.redraw.apply(this);
+			wangVertexHandler.prototype.redraw.apply(this);
 			this.redrawTools();
 		};
 
-		mxVertexToolHandler.prototype.redrawTools = function()
+		wangVertexToolHandler.prototype.redrawTools = function()
 		{
 			if (this.state != null && this.domNode != null)
 			{
-				var dy = (mxClient.IS_VML && document.compatMode == 'CSS1Compat') ? 20 : 4;
+				var dy = (wangClient.IS_VML && document.compatMode == 'CSS1Compat') ? 20 : 4;
 				this.domNode.style.left = (this.state.x + this.state.width - 56) + 'px';
 				this.domNode.style.top = (this.state.y + this.state.height + dy) + 'px';
 			}
 		};
 		
-		mxVertexToolHandler.prototype.destroy = function(sender, me)
+		wangVertexToolHandler.prototype.destroy = function(sender, me)
 		{
-			mxVertexHandler.prototype.destroy.apply(this, arguments);
+			wangVertexHandler.prototype.destroy.apply(this, arguments);
 
 			if (this.domNode != null)
 			{
@@ -176,15 +176,15 @@
 		function main(container)
 		{
 			// Checks if the browser is supported
-			if (!mxClient.isBrowserSupported())
+			if (!wangClient.isBrowserSupported())
 			{
 				// Displays an error message if the browser is not supported.
-				mxUtils.error('Browser is not supported!', 200, false);
+				wangUtils.error('Browser is not supported!', 200, false);
 			}
 			else
 			{
 				// Creates the graph inside the given container
-				var graph = new mxGraph(container);
+				var graph = new wangGraph(container);
 				graph.setConnectable(true);
 				graph.connectionHandler.createTarget = true;
 
@@ -193,10 +193,10 @@
 					if (state != null &&
 						this.model.isVertex(state.cell))
 					{
-						return new mxVertexToolHandler(state);
+						return new wangVertexToolHandler(state);
 					}
 
-					return mxGraph.prototype.createHandler.apply(this, arguments);
+					return wangGraph.prototype.createHandler.apply(this, arguments);
 				};
 
 				// Uncomment the following if you want the container
@@ -204,7 +204,7 @@
 				//graph.setResizeContainer(true);
 				
 				// Enables rubberband selection
-				new mxRubberband(graph);
+				new wangRubberband(graph);
 				
 				// Gets the default parent for inserting new cells. This
 				// is normally the first child of the root (ie. layer 0).

@@ -33,16 +33,16 @@
 			else
 			{
 				// Enables guides
-				mxGraphHandler.prototype.guidesEnabled = true;
+				wangGraphHandler.prototype.guidesEnabled = true;
 				
 			    // Alt disables guides
-			    mxGuide.prototype.isEnabledForEvent = function(evt)
+			    wangGuide.prototype.isEnabledForEvent = function(evt)
 			    {
-			    	return !mxEvent.isAltDown(evt);
+			    	return !wangEvent.isAltDown(evt);
 			    };
 				
 				// Enables snapping waypoints to terminals
-				mxEdgeHandler.prototype.snapToTerminals = true;
+				wangEdgeHandler.prototype.snapToTerminals = true;
 				
 				var graphs = [];
 				
@@ -59,7 +59,7 @@
 
 					document.body.appendChild(container);
 					
-					var graph = new mxGraph(container);
+					var graph = new wangGraph(container);
 					graph.gridSize = 30;
 					
 					// Uncomment the following if you want the container
@@ -67,7 +67,7 @@
 					//graph.setResizeContainer(true);
 					
 					// Enables rubberband selection
-					new mxRubberband(graph);
+					new wangRubberband(graph);
 					
 					// Gets the default parent for inserting new cells. This
 					// is normally the first child of the root (ie. layer 0).
@@ -93,13 +93,13 @@
 				// Returns the graph under the mouse
 				var graphF = function(evt)
 				{
-					var x = mxEvent.getClientX(evt);
-					var y = mxEvent.getClientY(evt);
+					var x = wangEvent.getClientX(evt);
+					var y = wangEvent.getClientY(evt);
 					var elt = document.elementFromPoint(x, y);
 					
 					for (var i = 0; i < graphs.length; i++)
 					{
-						if (mxUtils.isAncestorNode(graphs[i].container, elt))
+						if (wangUtils.isAncestorNode(graphs[i].container, elt))
 						{
 							return graphs[i];
 						}
@@ -111,7 +111,7 @@
 				// Inserts a cell at the given location
 				var funct = function(graph, evt, target, x, y)
 				{
-					var cell = new mxCell('Test', new mxGeometry(0, 0, 120, 40));
+					var cell = new wangCell('Test', new wangGeometry(0, 0, 120, 40));
 					cell.vertex = true;
 					var cells = graph.importCells([cell], x, y, target);
 
@@ -123,15 +123,15 @@
 				};
 				
 				// Creates a DOM node that acts as the drag source
-				var img = mxUtils.createImage('images/icons48/gear.png');
+				var img = wangUtils.createImage('images/icons48/gear.png');
 				img.style.width = '48px';
 				img.style.height = '48px';
 				document.body.appendChild(img);
 				
 				// Disables built-in DnD in IE (this is needed for cross-frame DnD, see below)
-				if (mxClient.IS_IE)
+				if (wangClient.IS_IE)
 				{
-					mxEvent.addListener(img, 'dragstart', function(evt)
+					wangEvent.addListener(img, 'dragstart', function(evt)
 					{
 						evt.returnValue = false;
 					});
@@ -147,7 +147,7 @@
 				// if scalePreview (last) argument is true. Dx and dy are null to force
 				// the use of the defaults. Note that dx and dy are only used for the
 				// drag icon but not for the preview.
-				var ds = mxUtils.makeDraggable(img, graphF, funct, dragElt, null, null, graph.autoscroll, true);
+				var ds = wangUtils.makeDraggable(img, graphF, funct, dragElt, null, null, graph.autoscroll, true);
 				
 				// Redirects feature to global switch. Note that this feature should only be used
 				// if the the x and y arguments are used in funct to insert the cell.
@@ -157,42 +157,42 @@
 				};
 				
 				// Restores original drag icon while outside of graph
-				ds.createDragElement = mxDragSource.prototype.createDragElement;
+				ds.createDragElement = wangDragSource.prototype.createDragElement;
 			}
 		};
 		
 		// NOTE: To enable cross-document DnD (eg. between frames),
 		// the following methods need to be overridden:
-		/*mxDragSourceMouseUp = mxDragSource.prototype.mouseUp;
-		mxDragSource.prototype.mouseUp = function(evt)
+		/*wangDragSourceMouseUp = wangDragSource.prototype.mouseUp;
+		wangDragSource.prototype.mouseUp = function(evt)
 		{
 			var doc = this.element.ownerDocument;
 			
 			if (doc != document)
 			{
-				var mu = (mxClient.IS_TOUCH) ? 'touchend' : 'mouseup';
+				var mu = (wangClient.IS_TOUCH) ? 'touchend' : 'mouseup';
 				
 				if (this.mouseUpHandler != null)
 				{
-					mxEvent.removeListener(doc, mu, this.mouseUpHandler);
+					wangEvent.removeListener(doc, mu, this.mouseUpHandler);
 				}
 			}
 			
-			mxDragSourceMouseUp.apply(this, arguments);
+			wangDragSourceMouseUp.apply(this, arguments);
 		};*/
 		
-		/*mxDragSourceMouseDown = mxDragSource.prototype.mouseDown;
-		mxDragSource.prototype.mouseDown = function(evt)
+		/*wangDragSourceMouseDown = wangDragSource.prototype.mouseDown;
+		wangDragSource.prototype.mouseDown = function(evt)
 		{
-			if (this.enabled && !mxEvent.isConsumed(evt))
+			if (this.enabled && !wangEvent.isConsumed(evt))
 			{
-				mxDragSourceMouseDown.apply(this, arguments);
+				wangDragSourceMouseDown.apply(this, arguments);
 				var doc = this.element.ownerDocument;
 				
 				if (doc != document)
 				{
-					var mu = (mxClient.IS_TOUCH) ? 'touchend' : 'mouseup';
-					mxEvent.addListener(doc, mu, this.mouseUpHandler);
+					var mu = (wangClient.IS_TOUCH) ? 'touchend' : 'mouseup';
+					wangEvent.addListener(doc, mu, this.mouseUpHandler);
 				}
 			}
 		};*/

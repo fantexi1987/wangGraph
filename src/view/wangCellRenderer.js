@@ -425,7 +425,10 @@ export class wangCellRenderer {
     let getState = function (evt) {
       let result = state;
 
-      if ((graph.dialect != wangConstants.DIALECT_SVG && wangEvent.getSource(evt).nodeName == 'IMG') || wangClient.IS_TOUCH) {
+      if (
+        (graph.dialect != wangConstants.DIALECT_SVG && wangEvent.getSource(evt).nodeName == 'IMG') ||
+        wangClient.IS_TOUCH
+      ) {
         let x = wangEvent.getClientX(evt);
         let y = wangEvent.getClientY(evt);
         let pt = wangUtils.convertPoint(graph.container, x, y);
@@ -617,7 +620,11 @@ export class wangCellRenderer {
 
     if (state.shape != null) {
       let hpos = wangUtils.getValue(state.style, wangConstants.STYLE_LABEL_POSITION, wangConstants.ALIGN_CENTER);
-      let vpos = wangUtils.getValue(state.style, wangConstants.STYLE_VERTICAL_LABEL_POSITION, wangConstants.ALIGN_MIDDLE);
+      let vpos = wangUtils.getValue(
+        state.style,
+        wangConstants.STYLE_VERTICAL_LABEL_POSITION,
+        wangConstants.ALIGN_MIDDLE
+      );
 
       if (hpos == wangConstants.ALIGN_CENTER && vpos == wangConstants.ALIGN_MIDDLE) {
         bounds = state.shape.getLabelBounds(bounds);
@@ -650,7 +657,11 @@ export class wangCellRenderer {
       bounds.x += spacing.x * s;
       bounds.y += spacing.y * s;
       let hpos = wangUtils.getValue(state.style, wangConstants.STYLE_LABEL_POSITION, wangConstants.ALIGN_CENTER);
-      let vpos = wangUtils.getValue(state.style, wangConstants.STYLE_VERTICAL_LABEL_POSITION, wangConstants.ALIGN_MIDDLE);
+      let vpos = wangUtils.getValue(
+        state.style,
+        wangConstants.STYLE_VERTICAL_LABEL_POSITION,
+        wangConstants.ALIGN_MIDDLE
+      );
       let lw = wangUtils.getValue(state.style, wangConstants.STYLE_LABEL_WIDTH, null);
       bounds.width = Math.max(
         0,
@@ -855,6 +866,29 @@ export class wangCellRenderer {
   }
 
   redraw(state, force, rendering) {
+    // ---------begin-----------------
+    if (this.allowAutoPanning && this.panningHandler.isActive()) {
+      if (state.view && state.view.graph && state.view.graph.container) {
+        const { x: cellX, y: cellY, height: cellH, width: cellW } = state.cellBounds;
+        const { x: tx, y: ty } = state.view.translate;
+        const rx = cellX + tx;
+        const ry = cellY + ty;
+        const { offsetWidth: viewWidth, offsetHeight: viewHeight } = state.view.graph.container;
+        const xMargin = 200;
+        const scale = state.view.scale;
+        if (
+          rx + cellW + xMargin < 0 ||
+          rx * scale > viewWidth + xMargin ||
+          ry + cellH + xMargin < 0 ||
+          ry * scale > viewHeight + xMargin
+        ) {
+          this.destroy(state);
+          return;
+        }
+      }
+    }
+    // --------------end-----------------------
+
     let shapeChanged = this.redrawShape(state, force, rendering);
 
     if (state.shape != null && (rendering == null || rendering)) {

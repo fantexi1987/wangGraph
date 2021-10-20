@@ -1,52 +1,52 @@
 <!--
   Copyright (c) 2006-2013, JGraph Ltd
   
-  Boundary example for mxGraph. This example demonstrates
+  Boundary example for wangGraph. This example demonstrates
   implementing boundary events in BPMN diagrams.
 -->
 <html>
 <head>
-	<title>Boundary example for mxGraph</title>
+	<title>Boundary example for wangGraph</title>
 
 	<!-- Sets the basepath for the library if not in same directory -->
 	<script type="text/javascript">
-		mxBasePath = '../dist';
+		wangBasePath = '../dist';
 	</script>
 
 	<!-- Loads and initializes the library -->
-	<script type="text/javascript" src="../dist/mxgraph.umd.js"></script>
+	<script type="text/javascript" src="../dist/wanggraph.umd.js"></script>
 
 	<!-- Example code -->
 	<script type="text/javascript">
-		Object.keys(window.mxgraph).forEach(mxGraphClassName => { window[mxGraphClassName] = window.mxgraph[mxGraphClassName]; });
+		Object.keys(window.wGraph).forEach(wangGraphClassName => { window[wangGraphClassName] = window.wGraph[wangGraphClassName]; });
 		// Program starts here. Creates a sample graph in the
 		// DOM node with the specified ID. This function is invoked
 		// from the onLoad event handler of the document (see below).
 		function main(container)
 		{
 			// Checks if the browser is supported
-			if (!mxClient.isBrowserSupported())
+			if (!wangClient.isBrowserSupported())
 			{
 				// Displays an error message if the browser is not supported.
-				mxUtils.error('Browser is not supported!', 200, false);
+				wangUtils.error('Browser is not supported!', 200, false);
 			}
 			else
 			{
 				// Disables the built-in context menu
-				mxEvent.disableContextMenu(container);
+				wangEvent.disableContextMenu(container);
 				
 				// Creates the graph inside the given container
-				var graph = new mxGraph(container);
+				var graph = new wangGraph(container);
 				
 				// Sets the base style for all vertices
 				var style = graph.getStylesheet().getDefaultVertexStyle();
-				style[mxConstants.STYLE_ROUNDED] = true;
-				style[mxConstants.STYLE_FILLCOLOR] = '#ffffff';
-				style[mxConstants.STYLE_STROKECOLOR] = '#000000';
-				style[mxConstants.STYLE_STROKEWIDTH] = '2';
-				style[mxConstants.STYLE_FONTCOLOR] = '#000000';
-				style[mxConstants.STYLE_FONTSIZE] = '12';
-				style[mxConstants.STYLE_FONTSTYLE] = 1;
+				style[wangConstants.STYLE_ROUNDED] = true;
+				style[wangConstants.STYLE_FILLCOLOR] = '#ffffff';
+				style[wangConstants.STYLE_STROKECOLOR] = '#000000';
+				style[wangConstants.STYLE_STROKEWIDTH] = '2';
+				style[wangConstants.STYLE_FONTCOLOR] = '#000000';
+				style[wangConstants.STYLE_FONTSIZE] = '12';
+				style[wangConstants.STYLE_FONTSTYLE] = 1;
 				graph.getStylesheet().putDefaultVertexStyle(style);
 				
 				// Removes folding icon for relative children
@@ -110,7 +110,7 @@
 										y = (y > 0.5) ? 1 : 0;
 									}
 									
-									return new mxPoint(x, y);
+									return new wangPoint(x, y);
 								}
 							}
 						}
@@ -139,15 +139,15 @@
 					}
 					else
 					{
-						mxGraph.prototype.translateCell.apply(this, arguments);
+						wangGraph.prototype.translateCell.apply(this, arguments);
 					}
 				};
 				
 				// Replaces move preview for relative children
 				graph.graphHandler.getDelta = function(me)
 				{
-					var point = mxUtils.convertPoint(this.graph.container, me.getX(), me.getY());
-					var delta = new mxPoint(point.x - this.first.x, point.y - this.first.y);
+					var point = wangUtils.convertPoint(this.graph.container, me.getX(), me.getY());
+					var delta = new wangPoint(point.x - this.first.x, point.y - this.first.y);
 					
 					if (this.cells != null && this.cells.length > 0 && this.cells[0] != null)
 					{
@@ -160,7 +160,7 @@
 							
 							if (pstate != null)
 							{
-								delta = new mxPoint(pstate.x + pstate.width * rel.x - state.getCenterX(),
+								delta = new wangPoint(pstate.x + pstate.width * rel.x - state.getCenterX(),
 										pstate.y + pstate.height * rel.y - state.getCenterY());
 							}
 						}
@@ -172,7 +172,7 @@
 				// Relative children cannot be removed from parent
 				graph.graphHandler.shouldRemoveCellsFromParent = function(parent, cells, evt)
 				{
-					return cells.length == 0 && !cells[0].geometry.relative && mxGraphHandler.prototype.shouldRemoveCellsFromParent.apply(this, arguments);
+					return cells.length == 0 && !cells[0].geometry.relative && wangGraphHandler.prototype.shouldRemoveCellsFromParent.apply(this, arguments);
 				};
 				
 				// Enables moving of relative children
@@ -182,7 +182,7 @@
 				};
 
 				// Enables rubberband selection
-				new mxRubberband(graph);
+				new wangRubberband(graph);
 				
 				// Gets the default parent for inserting new cells. This
 				// is normally the first child of the root (ie. layer 0).
@@ -194,10 +194,10 @@
 				{
 					var v1 = graph.insertVertex(parent, null, 'Process', 60, 60, 90, 40);
 					var v2 = graph.insertVertex(v1, null, 'in', 0, 0.5, 20, 20, 'fontSize=9;shape=ellipse;resizable=0;');
-					v2.geometry.offset = new mxPoint(-10, -10);
+					v2.geometry.offset = new wangPoint(-10, -10);
 					v2.geometry.relative = true;
 					var v3 = graph.insertVertex(v1, null, 'out', 1, 0.5, 20, 20, 'fontSize=9;shape=ellipse;resizable=0;');
-					v3.geometry.offset = new mxPoint(-10, -10);
+					v3.geometry.offset = new wangPoint(-10, -10);
 					v3.geometry.relative = true;
 				}
 				finally

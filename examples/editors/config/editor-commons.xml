@@ -1,8 +1,8 @@
-<mxEditor>
+<wangEditor>
 	<ui>
 		<resource basename="resources/app"/>
 	</ui>
-	<mxDefaultPopupMenu as="popupHandler">
+	<wangDefaultPopupMenu as="popupHandler">
 		<add as="cut" action="cut" icon="images/cut.gif"/>
 		<add as="copy" action="copy" icon="images/copy.gif"/>
 		<add as="paste" action="paste" icon="images/paste.gif"/>
@@ -46,13 +46,13 @@
 		<add as="properties" action="showProperties" icon="images/properties.gif"/>
 		<separator/>
 		<add as="openHref" action="openHref" icon="images/link.gif"/>
-	</mxDefaultPopupMenu>
+	</wangDefaultPopupMenu>
 	<include name="config/keyhandler-commons.xml"/>
 	<Array as="actions">
 		<add as="open"><![CDATA[
 			function (editor)
 			{
-				editor.open(mxUtils.prompt('Enter filename', 'workflow.xml'));
+				editor.open(wangUtils.prompt('Enter filename', 'workflow.xml'));
 			}
 		]]></add>
 		<add as="openHref"><![CDATA[
@@ -80,7 +80,7 @@
 					}
 					else
 					{
-						mxUtils.alert('No URL defined. Showing properties...');
+						wangUtils.alert('No URL defined. Showing properties...');
 						editor.execute('showProperties', cell);
 					}
 				}
@@ -94,7 +94,7 @@
 				if (cell != null)
 				{
 					var model = editor.graph.getModel();
-					var style = mxUtils.prompt(mxResources.get('enterStyle'), model.getStyle(cell) || '');
+					var style = wangUtils.prompt(wangResources.get('enterStyle'), model.getStyle(cell) || '');
 
 					if (style != null)
 					{
@@ -106,7 +106,7 @@
 		<add as="fillColor"><![CDATA[
 			function (editor)
 			{
-				var color = mxUtils.prompt(mxResources.get('enterColorname'), 'red');
+				var color = wangUtils.prompt(wangResources.get('enterColorname'), 'red');
 				
 				if (color != null)
 				{
@@ -126,7 +126,7 @@
 		<add as="gradientColor"><![CDATA[
 			function (editor)
 			{
-				var color = mxUtils.prompt(mxResources.get('enterColorname'), 'white');
+				var color = wangUtils.prompt(wangResources.get('enterColorname'), 'white');
 				
 				if (color != null)
 				{
@@ -137,7 +137,7 @@
 		<add as="strokeColor"><![CDATA[
 			function (editor)
 			{
-				var color = mxUtils.prompt(mxResources.get('enterColorname'), 'red');
+				var color = wangUtils.prompt(wangResources.get('enterColorname'), 'red');
 				
 				if (color != null)
 				{
@@ -148,7 +148,7 @@
 		<add as="fontColor"><![CDATA[
 			function (editor)
 			{
-				var color = mxUtils.prompt(mxResources.get('enterColorname'), 'red');
+				var color = wangUtils.prompt(wangResources.get('enterColorname'), 'red');
 				
 				if (color != null)
 				{
@@ -159,7 +159,7 @@
 		<add as="fontFamily"><![CDATA[
 			function (editor)
 			{
-				var family = mxUtils.prompt(mxResources.get('enterFontfamily'), 'Arial');
+				var family = wangUtils.prompt(wangResources.get('enterFontfamily'), 'Arial');
 				
 				if (family != null && family.length > 0)
 				{
@@ -170,7 +170,7 @@
 		<add as="fontSize"><![CDATA[
 			function (editor)
 			{
-				var size = mxUtils.prompt(mxResources.get('enterFontsize'), '10');
+				var size = wangUtils.prompt(wangResources.get('enterFontsize'), '10');
 				
 				if (size != null && size > 0 && size < 999)
 				{
@@ -181,7 +181,7 @@
 		<add as="image"><![CDATA[
 			function (editor)
 			{
-				var image = mxUtils.prompt(mxResources.get('enterImageUrl'),
+				var image = wangUtils.prompt(wangResources.get('enterImageUrl'),
 					'examples/images/image.gif');
 				
 				if (image != null)
@@ -193,7 +193,7 @@
 		<add as="opacity"><![CDATA[
 			function (editor)
 			{
-				var opacity = mxUtils.prompt(mxResources.get('enterOpacity'), '100');
+				var opacity = wangUtils.prompt(wangResources.get('enterOpacity'), '100');
 				
 				if (opacity != null && opacity >= 0 && opacity <= 100)
 				{
@@ -222,19 +222,19 @@
 		<add as="toggleOrientation"><![CDATA[
 			function (editor, cell)
 			{
-				editor.graph.toggleCellStyles(mxConstants.STYLE_HORIZONTAL, true);
+				editor.graph.toggleCellStyles(wangConstants.STYLE_HORIZONTAL, true);
 			}
 		]]></add>
 		<add as="toggleRounded"><![CDATA[
 			function (editor)
 			{
-				editor.graph.toggleCellStyles(mxConstants.STYLE_ROUNDED);
+				editor.graph.toggleCellStyles(wangConstants.STYLE_ROUNDED);
 			}
 		]]></add>
 		<add as="toggleShadow"><![CDATA[
 			function (editor)
 			{
-				editor.graph.toggleCellStyles(mxConstants.STYLE_SHADOW);
+				editor.graph.toggleCellStyles(wangConstants.STYLE_SHADOW);
 			}
 		]]></add>
 		<add as="horizontalTree"><![CDATA[
@@ -264,4 +264,4 @@
 			}
 		]]></add>
 	</Array>
-</mxEditor>
+</wangEditor>
