@@ -867,24 +867,25 @@ export class wangCellRenderer {
 
   redraw(state, force, rendering) {
     // ---------begin-----------------
-    if (this.allowAutoPanning && this.panningHandler.isActive()) {
-      if (state.view && state.view.graph && state.view.graph.container) {
-        const { x: cellX, y: cellY, height: cellH, width: cellW } = state.cellBounds;
-        const { x: tx, y: ty } = state.view.translate;
-        const rx = cellX + tx;
-        const ry = cellY + ty;
-        const { offsetWidth: viewWidth, offsetHeight: viewHeight } = state.view.graph.container;
-        const xMargin = 200;
-        const scale = state.view.scale;
-        if (
-          rx + cellW + xMargin < 0 ||
-          rx * scale > viewWidth + xMargin ||
-          ry + cellH + xMargin < 0 ||
-          ry * scale > viewHeight + xMargin
-        ) {
-          this.destroy(state);
-          return;
-        }
+    let view = state?.view;
+    let graph = view?.graph;
+    let container = graph?.container;
+    if (container && graph.panningHandler.isActive()) {
+      const { x: cellX, y: cellY, height: cellH, width: cellW } = state.cellBounds;
+      const { x: tx, y: ty } = view.translate;
+      const rx = cellX + tx;
+      const ry = cellY + ty;
+      const { offsetWidth: viewWidth, offsetHeight: viewHeight } = container;
+      const xMargin = 0;
+      const scale = view.scale;
+      if (
+        rx + cellW + xMargin < 0 ||
+        rx * scale > viewWidth + xMargin ||
+        ry + cellH + xMargin < 0 ||
+        ry * scale > viewHeight + xMargin
+      ) {
+        this.destroy(state);
+        return;
       }
     }
     // --------------end-----------------------
