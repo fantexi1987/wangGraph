@@ -234,12 +234,14 @@ export class wangText extends wangShape {
       this.spacingTop =
         parseInt(wangUtils.getValue(this.style, wangConstants.STYLE_SPACING_TOP, this.spacingTop - old)) + this.spacing;
       this.spacingRight =
-        parseInt(wangUtils.getValue(this.style, wangConstants.STYLE_SPACING_RIGHT, this.spacingRight - old)) + this.spacing;
+        parseInt(wangUtils.getValue(this.style, wangConstants.STYLE_SPACING_RIGHT, this.spacingRight - old)) +
+        this.spacing;
       this.spacingBottom =
         parseInt(wangUtils.getValue(this.style, wangConstants.STYLE_SPACING_BOTTOM, this.spacingBottom - old)) +
         this.spacing;
       this.spacingLeft =
-        parseInt(wangUtils.getValue(this.style, wangConstants.STYLE_SPACING_LEFT, this.spacingLeft - old)) + this.spacing;
+        parseInt(wangUtils.getValue(this.style, wangConstants.STYLE_SPACING_LEFT, this.spacingLeft - old)) +
+        this.spacing;
       this.horizontal = wangUtils.getValue(this.style, wangConstants.STYLE_HORIZONTAL, this.horizontal);
       this.background = wangUtils.getValue(this.style, wangConstants.STYLE_LABEL_BACKGROUNDCOLOR, this.background);
       this.border = wangUtils.getValue(this.style, wangConstants.STYLE_LABEL_BORDERCOLOR, this.border);
@@ -463,7 +465,9 @@ export class wangText extends wangShape {
   }
 
   getTextCss() {
-    let lh = wangConstants.ABSOLUTE_LINE_HEIGHT ? this.size * wangConstants.LINE_HEIGHT + 'px' : wangConstants.LINE_HEIGHT;
+    let lh = wangConstants.ABSOLUTE_LINE_HEIGHT
+      ? this.size * wangConstants.LINE_HEIGHT + 'px'
+      : wangConstants.LINE_HEIGHT;
     let css =
       'display: inline-block; font-size: ' +
       this.size +

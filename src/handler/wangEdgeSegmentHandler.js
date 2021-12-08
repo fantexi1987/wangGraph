@@ -69,7 +69,10 @@ export class wangEdgeSegmentHandler extends wangElbowEdgeHandler {
         let x = result[0].x * scale + tr.x;
         let y = result[0].y * scale + tr.y;
 
-        if ((source != null && wangUtils.contains(source, x, y)) || (target != null && wangUtils.contains(target, x, y))) {
+        if (
+          (source != null && wangUtils.contains(source, x, y)) ||
+          (target != null && wangUtils.contains(target, x, y))
+        ) {
           result = [point, point];
         }
       }

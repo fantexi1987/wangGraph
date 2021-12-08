@@ -8,7 +8,8 @@ export class wangEdgeStyle {
   static EntityRelation(state, source, target, points, result) {
     let view = state.view;
     let graph = view.graph;
-    let segment = wangUtils.getValue(state.style, wangConstants.STYLE_SEGMENT, wangConstants.ENTITY_SEGMENT) * view.scale;
+    let segment =
+      wangUtils.getValue(state.style, wangConstants.STYLE_SEGMENT, wangConstants.ENTITY_SEGMENT) * view.scale;
     let pts = state.absolutePoints;
     let p0 = pts[0];
     let pe = pts[pts.length - 1];
@@ -640,7 +641,8 @@ export class wangEdgeStyle {
           wangConstants.DEFAULT_MARKERSIZE
         );
         value =
-          Math.max(2, Math.ceil((size + wangEdgeStyle.orthBuffer) / wangEdgeStyle.orthBuffer)) * wangEdgeStyle.orthBuffer;
+          Math.max(2, Math.ceil((size + wangEdgeStyle.orthBuffer) / wangEdgeStyle.orthBuffer)) *
+          wangEdgeStyle.orthBuffer;
       } else {
         value = 2 * wangEdgeStyle.orthBuffer;
       }
@@ -741,7 +743,10 @@ export class wangEdgeStyle {
       rotation = wangUtils.getValue(source.style, wangConstants.STYLE_ROTATION, 0);
 
       if (rotation != 0) {
-        let newRect = wangUtils.getBoundingBox(new wangRectangle(sourceX, sourceY, sourceWidth, sourceHeight), rotation);
+        let newRect = wangUtils.getBoundingBox(
+          new wangRectangle(sourceX, sourceY, sourceWidth, sourceHeight),
+          rotation
+        );
         sourceX = newRect.x;
         sourceY = newRect.y;
         sourceWidth = newRect.width;
@@ -754,7 +759,10 @@ export class wangEdgeStyle {
       rotation = wangUtils.getValue(target.style, wangConstants.STYLE_ROTATION, 0);
 
       if (rotation != 0) {
-        let newRect = wangUtils.getBoundingBox(new wangRectangle(targetX, targetY, targetWidth, targetHeight), rotation);
+        let newRect = wangUtils.getBoundingBox(
+          new wangRectangle(targetX, targetY, targetWidth, targetHeight),
+          rotation
+        );
         targetX = newRect.x;
         targetY = newRect.y;
         targetWidth = newRect.width;
@@ -848,7 +856,8 @@ export class wangEdgeStyle {
     let dirPref = [];
     let horPref = [];
     let vertPref = [];
-    horPref[0] = sourceLeftDist >= sourceRightDist ? wangConstants.DIRECTION_MASK_WEST : wangConstants.DIRECTION_MASK_EAST;
+    horPref[0] =
+      sourceLeftDist >= sourceRightDist ? wangConstants.DIRECTION_MASK_WEST : wangConstants.DIRECTION_MASK_EAST;
     vertPref[0] =
       sourceTopDist >= sourceBottomDist ? wangConstants.DIRECTION_MASK_NORTH : wangConstants.DIRECTION_MASK_SOUTH;
     horPref[1] = wangUtils.reversePortConstraints(horPref[0]);
@@ -988,7 +997,8 @@ export class wangEdgeStyle {
     }
 
     let currentIndex = 0;
-    let lastOrientation = (dir[0] & (wangConstants.DIRECTION_MASK_EAST | wangConstants.DIRECTION_MASK_WEST)) > 0 ? 0 : 1;
+    let lastOrientation =
+      (dir[0] & (wangConstants.DIRECTION_MASK_EAST | wangConstants.DIRECTION_MASK_WEST)) > 0 ? 0 : 1;
     let initialOrientation = lastOrientation;
     let currentOrientation = 0;
 

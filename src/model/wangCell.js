@@ -248,7 +248,9 @@ export class wangCell {
   getAttribute(name, defaultValue) {
     let userObject = this.getValue();
     let val =
-      userObject != null && userObject.nodeType == wangConstants.NODETYPE_ELEMENT ? userObject.getAttribute(name) : null;
+      userObject != null && userObject.nodeType == wangConstants.NODETYPE_ELEMENT
+        ? userObject.getAttribute(name)
+        : null;
     return val != null ? val : defaultValue;
   }
 

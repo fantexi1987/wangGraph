@@ -467,7 +467,10 @@ export class wangCoordinateAssignment extends wangHierarchicalLayoutStage {
           let bounds = this.layout.getVertexBounds(node.cell);
 
           if (bounds != null) {
-            if (this.orientation == wangConstants.DIRECTION_NORTH || this.orientation == wangConstants.DIRECTION_SOUTH) {
+            if (
+              this.orientation == wangConstants.DIRECTION_NORTH ||
+              this.orientation == wangConstants.DIRECTION_SOUTH
+            ) {
               node.width = bounds.width;
               node.height = bounds.height;
             } else {

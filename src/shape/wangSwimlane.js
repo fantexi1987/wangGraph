@@ -28,7 +28,8 @@ export class wangSwimlane extends wangShape {
     let horizontal = this.isHorizontal();
     let flipH = wangUtils.getValue(this.style, wangConstants.STYLE_FLIPH, 0) == 1;
     let flipV = wangUtils.getValue(this.style, wangConstants.STYLE_FLIPV, 0) == 1;
-    let shapeVertical = this.direction == wangConstants.DIRECTION_NORTH || this.direction == wangConstants.DIRECTION_SOUTH;
+    let shapeVertical =
+      this.direction == wangConstants.DIRECTION_NORTH || this.direction == wangConstants.DIRECTION_SOUTH;
     let realHorizontal = horizontal == !shapeVertical;
     let realFlipH =
       !realHorizontal &&
@@ -78,7 +79,8 @@ export class wangSwimlane extends wangShape {
       );
     } else {
       let f =
-        wangUtils.getValue(this.style, wangConstants.STYLE_ARCSIZE, wangConstants.RECTANGLE_ROUNDING_FACTOR * 100) / 100;
+        wangUtils.getValue(this.style, wangConstants.STYLE_ARCSIZE, wangConstants.RECTANGLE_ROUNDING_FACTOR * 100) /
+        100;
       return start * f * 3;
     }
   }

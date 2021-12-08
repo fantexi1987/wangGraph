@@ -566,7 +566,9 @@ export class wangGraph extends wangEventSource {
     try {
       let old = cell.value;
       this.cellLabelChanged(cell, value, this.isAutoSizeCell(cell));
-      this.fireEvent(new wangEventObject(wangEvent.LABEL_CHANGED, 'cell', cell, 'value', value, 'old', old, 'event', evt));
+      this.fireEvent(
+        new wangEventObject(wangEvent.LABEL_CHANGED, 'cell', cell, 'value', value, 'old', old, 'event', evt)
+      );
     } finally {
       this.model.endUpdate();
     }
@@ -707,7 +709,9 @@ export class wangGraph extends wangEventSource {
         this.connectionHandler.first = new wangPoint(me.getGraphX(), me.getGraphY());
         this.connectionHandler.edgeState = this.connectionHandler.createEdgeState(me);
         this.connectionHandler.previous = state;
-        this.connectionHandler.fireEvent(new wangEventObject(wangEvent.START, 'state', this.connectionHandler.previous));
+        this.connectionHandler.fireEvent(
+          new wangEventObject(wangEvent.START, 'state', this.connectionHandler.previous)
+        );
       }
     }
   }
@@ -2024,7 +2028,9 @@ export class wangGraph extends wangEventSource {
 
     try {
       this.cellsFolded(cells, collapse, recurse, checkFoldable);
-      this.fireEvent(new wangEventObject(wangEvent.FOLD_CELLS, 'collapse', collapse, 'recurse', recurse, 'cells', cells));
+      this.fireEvent(
+        new wangEventObject(wangEvent.FOLD_CELLS, 'collapse', collapse, 'recurse', recurse, 'cells', cells)
+      );
     } finally {
       this.model.endUpdate();
     }
@@ -2358,7 +2364,9 @@ export class wangGraph extends wangEventSource {
           this.resetEdges(cells);
         }
 
-        this.fireEvent(new wangEventObject(wangEvent.CELLS_RESIZED, 'cells', cells, 'bounds', bounds, 'previous', prev));
+        this.fireEvent(
+          new wangEventObject(wangEvent.CELLS_RESIZED, 'cells', cells, 'bounds', bounds, 'previous', prev)
+        );
       } finally {
         this.model.endUpdate();
       }
@@ -3000,19 +3008,29 @@ export class wangGraph extends wangEventSource {
             edge
           ]);
         } else if (constraint.point != null) {
-          this.setCellStyles(source ? wangConstants.STYLE_EXIT_X : wangConstants.STYLE_ENTRY_X, constraint.point.x, [edge]);
-          this.setCellStyles(source ? wangConstants.STYLE_EXIT_Y : wangConstants.STYLE_ENTRY_Y, constraint.point.y, [edge]);
-          this.setCellStyles(source ? wangConstants.STYLE_EXIT_DX : wangConstants.STYLE_ENTRY_DX, constraint.dx, [edge]);
-          this.setCellStyles(source ? wangConstants.STYLE_EXIT_DY : wangConstants.STYLE_ENTRY_DY, constraint.dy, [edge]);
+          this.setCellStyles(source ? wangConstants.STYLE_EXIT_X : wangConstants.STYLE_ENTRY_X, constraint.point.x, [
+            edge
+          ]);
+          this.setCellStyles(source ? wangConstants.STYLE_EXIT_Y : wangConstants.STYLE_ENTRY_Y, constraint.point.y, [
+            edge
+          ]);
+          this.setCellStyles(source ? wangConstants.STYLE_EXIT_DX : wangConstants.STYLE_ENTRY_DX, constraint.dx, [
+            edge
+          ]);
+          this.setCellStyles(source ? wangConstants.STYLE_EXIT_DY : wangConstants.STYLE_ENTRY_DY, constraint.dy, [
+            edge
+          ]);
 
           if (!constraint.perimeter) {
             this.setCellStyles(source ? wangConstants.STYLE_EXIT_PERIMETER : wangConstants.STYLE_ENTRY_PERIMETER, '0', [
               edge
             ]);
           } else {
-            this.setCellStyles(source ? wangConstants.STYLE_EXIT_PERIMETER : wangConstants.STYLE_ENTRY_PERIMETER, null, [
-              edge
-            ]);
+            this.setCellStyles(
+              source ? wangConstants.STYLE_EXIT_PERIMETER : wangConstants.STYLE_ENTRY_PERIMETER,
+              null,
+              [edge]
+            );
           }
         }
       } finally {
@@ -3218,7 +3236,10 @@ export class wangGraph extends wangEventSource {
                   }
 
                   if (src == null) {
-                    geo.setTerminalPoint(new wangPoint(pts[0].x / scale - tr.x + dx, pts[0].y / scale - tr.y + dy), true);
+                    geo.setTerminalPoint(
+                      new wangPoint(pts[0].x / scale - tr.x + dx, pts[0].y / scale - tr.y + dy),
+                      true
+                    );
                     this.model.setTerminal(cells[i], null, true);
                   }
                 }
@@ -5665,7 +5686,9 @@ export class wangGraph extends wangEventSource {
       this.isMouseTrigger = mouseEvent;
     } else if (
       !result &&
-      (((!wangClient.IS_FF || evtName != wangEvent.MOUSE_MOVE) && this.isMouseDown && this.isMouseTrigger != mouseEvent) ||
+      (((!wangClient.IS_FF || evtName != wangEvent.MOUSE_MOVE) &&
+        this.isMouseDown &&
+        this.isMouseTrigger != mouseEvent) ||
         (evtName == wangEvent.MOUSE_DOWN && this.isMouseDown) ||
         (evtName == wangEvent.MOUSE_UP && !this.isMouseDown))
     ) {

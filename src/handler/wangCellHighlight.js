@@ -71,7 +71,8 @@ export class wangCellHighlight {
     shape.opacity = this.opacity;
     shape.isDashed = this.dashed;
     shape.isShadow = false;
-    shape.dialect = this.graph.dialect != wangConstants.DIALECT_SVG ? wangConstants.DIALECT_VML : wangConstants.DIALECT_SVG;
+    shape.dialect =
+      this.graph.dialect != wangConstants.DIALECT_SVG ? wangConstants.DIALECT_VML : wangConstants.DIALECT_SVG;
     shape.init(this.graph.getView().getOverlayPane());
     wangEvent.redirectMouseEvents(shape.node, this.graph, this.state);
 

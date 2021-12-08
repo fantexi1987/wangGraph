@@ -4,6 +4,7 @@ import cleaner from 'rollup-plugin-cleaner';
 import { terser } from 'rollup-plugin-terser';
 import commonjs from 'rollup-plugin-commonjs'; // 将非ES6语法的包转为ES6可用
 import baseConfig from 'create-rollup-config';
+import webWorkerLoader from 'rollup-plugin-web-worker-loader';
 
 // eslint-disable-next-line no-undef
 const env = process.env.NODE_ENV;
@@ -49,7 +50,8 @@ const config = {
     cleaner({
       targets: ['./dist/']
     }),
-    commonjs()
+    commonjs(),
+    webWorkerLoader()
   ]
 };
 

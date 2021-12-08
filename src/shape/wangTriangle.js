@@ -14,6 +14,12 @@ export class wangTriangle extends wangActor {
 
   redrawPath(c, x, y, w, h) {
     let arcSize = wangUtils.getValue(this.style, wangConstants.STYLE_ARCSIZE, wangConstants.LINE_ARCSIZE) / 2;
-    this.addPoints(c, [new wangPoint(0, 0), new wangPoint(w, 0.5 * h), new wangPoint(0, h)], this.isRounded, arcSize, true);
+    this.addPoints(
+      c,
+      [new wangPoint(0, 0), new wangPoint(w, 0.5 * h), new wangPoint(0, h)],
+      this.isRounded,
+      arcSize,
+      true
+    );
   }
 }

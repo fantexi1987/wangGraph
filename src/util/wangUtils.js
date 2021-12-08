@@ -1049,7 +1049,11 @@ export class wangUtils {
     } else {
       let directions = value.toString();
       let returnValue = wangConstants.DIRECTION_MASK_NONE;
-      let constraintRotationEnabled = wangUtils.getValue(terminal.style, wangConstants.STYLE_PORT_CONSTRAINT_ROTATION, 0);
+      let constraintRotationEnabled = wangUtils.getValue(
+        terminal.style,
+        wangConstants.STYLE_PORT_CONSTRAINT_ROTATION,
+        0
+      );
       let rotation = 0;
 
       if (constraintRotationEnabled == 1) {
@@ -1234,7 +1238,12 @@ export class wangUtils {
       m2.height = m.x;
     }
 
-    return new wangRectangle(rect.x + m2.x, rect.y + m2.y, rect.width - m2.width - m2.x, rect.height - m2.height - m2.y);
+    return new wangRectangle(
+      rect.x + m2.x,
+      rect.y + m2.y,
+      rect.width - m2.width - m2.x,
+      rect.height - m2.height - m2.y
+    );
   }
 
   static getPerimeterPoint(pts, center, point) {

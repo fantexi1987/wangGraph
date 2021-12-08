@@ -90,7 +90,11 @@ export class wangLayoutManager extends wangEventSource {
 
   cellsMoved(cells, evt) {
     if (cells != null && evt != null) {
-      let point = wangUtils.convertPoint(this.getGraph().container, wangEvent.getClientX(evt), wangEvent.getClientY(evt));
+      let point = wangUtils.convertPoint(
+        this.getGraph().container,
+        wangEvent.getClientX(evt),
+        wangEvent.getClientY(evt)
+      );
 
       for (let i = 0; i < cells.length; i++) {
         let layout = this.getAncestorLayout(cells[i], wangEvent.MOVE_CELLS);

@@ -72,7 +72,8 @@ export class wangConnector extends wangPolyline {
 
     if (wangUtils.getValue(this.style, wangConstants.STYLE_ENDARROW, wangConstants.NONE) != wangConstants.NONE) {
       size =
-        Math.max(size, wangUtils.getNumber(this.style, wangConstants.STYLE_ENDSIZE, wangConstants.DEFAULT_MARKERSIZE)) + 1;
+        Math.max(size, wangUtils.getNumber(this.style, wangConstants.STYLE_ENDSIZE, wangConstants.DEFAULT_MARKERSIZE)) +
+        1;
     }
 
     bbox.grow(size * this.scale);

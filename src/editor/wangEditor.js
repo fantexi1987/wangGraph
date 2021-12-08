@@ -359,7 +359,8 @@ export class wangEditor extends wangEventSource {
     this.addAction('zoom', function (editor) {
       let current = editor.graph.getView().scale * 100;
       let scale =
-        parseFloat(wangUtils.prompt(wangResources.get(editor.askZoomResource) || editor.askZoomResource, current)) / 100;
+        parseFloat(wangUtils.prompt(wangResources.get(editor.askZoomResource) || editor.askZoomResource, current)) /
+        100;
 
       if (!isNaN(scale)) {
         editor.graph.getView().setScale(scale);
@@ -647,7 +648,9 @@ export class wangEditor extends wangEventSource {
         this.setStatus((wangResources.get(this.lastSavedResource) || this.lastSavedResource) + ': ' + tstamp);
       });
       this.addListener(wangEvent.OPEN, () => {
-        this.setStatus((wangResources.get(this.currentFileResource) || this.currentFileResource) + ': ' + this.filename);
+        this.setStatus(
+          (wangResources.get(this.currentFileResource) || this.currentFileResource) + ': ' + this.filename
+        );
       });
 
       if (wangClient.IS_QUIRKS) {

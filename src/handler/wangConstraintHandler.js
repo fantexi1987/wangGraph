@@ -296,7 +296,12 @@ export class wangConstraintHandler {
   }
 
   createHighlightShape() {
-    let hl = new wangRectangleShape(null, this.highlightColor, this.highlightColor, wangConstants.HIGHLIGHT_STROKEWIDTH);
+    let hl = new wangRectangleShape(
+      null,
+      this.highlightColor,
+      this.highlightColor,
+      wangConstants.HIGHLIGHT_STROKEWIDTH
+    );
     hl.opacity = wangConstants.HIGHLIGHT_OPACITY;
     return hl;
   }

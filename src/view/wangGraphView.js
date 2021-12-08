@@ -858,7 +858,9 @@ export class wangGraphView extends wangEventSource {
 
     let border = parseFloat(edge.style[wangConstants.STYLE_PERIMETER_SPACING] || 0);
     border += parseFloat(
-      edge.style[source ? wangConstants.STYLE_SOURCE_PERIMETER_SPACING : wangConstants.STYLE_TARGET_PERIMETER_SPACING] || 0
+      edge.style[
+        source ? wangConstants.STYLE_SOURCE_PERIMETER_SPACING : wangConstants.STYLE_TARGET_PERIMETER_SPACING
+      ] || 0
     );
     let pt = this.getPerimeterPoint(start, next, alpha == 0 && orth, border);
 
@@ -1413,7 +1415,8 @@ export class wangGraphView extends wangEventSource {
         (evt) => {
           if (
             this.isContainerEvent(evt) &&
-            ((!wangClient.IS_IE11 && !wangClient.IS_GC && !wangClient.IS_OP && !wangClient.IS_SF) || !this.isScrollEvent(evt))
+            ((!wangClient.IS_IE11 && !wangClient.IS_GC && !wangClient.IS_OP && !wangClient.IS_SF) ||
+              !this.isScrollEvent(evt))
           ) {
             graph.fireMouseEvent(wangEvent.MOUSE_DOWN, new wangMouseEvent(evt));
           }

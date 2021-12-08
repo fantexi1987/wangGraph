@@ -90,7 +90,10 @@ export class wangCellEditor {
 
   isCancelEditingKeyEvent(evt) {
     return (
-      this.escapeCancelsEditing || wangEvent.isShiftDown(evt) || wangEvent.isControlDown(evt) || wangEvent.isMetaDown(evt)
+      this.escapeCancelsEditing ||
+      wangEvent.isShiftDown(evt) ||
+      wangEvent.isControlDown(evt) ||
+      wangEvent.isMetaDown(evt)
     );
   }
 
@@ -250,7 +253,11 @@ export class wangCellEditor {
         } else {
           let bds = wangRectangle.fromRectangle(state);
           let hpos = wangUtils.getValue(state.style, wangConstants.STYLE_LABEL_POSITION, wangConstants.ALIGN_CENTER);
-          let vpos = wangUtils.getValue(state.style, wangConstants.STYLE_VERTICAL_LABEL_POSITION, wangConstants.ALIGN_MIDDLE);
+          let vpos = wangUtils.getValue(
+            state.style,
+            wangConstants.STYLE_VERTICAL_LABEL_POSITION,
+            wangConstants.ALIGN_MIDDLE
+          );
           bds =
             state.shape != null && hpos == wangConstants.ALIGN_CENTER && vpos == wangConstants.ALIGN_MIDDLE
               ? state.shape.getLabelBounds(bds)
@@ -265,12 +272,14 @@ export class wangCellEditor {
             let spacingTop =
               (parseInt(state.style[wangConstants.STYLE_SPACING_TOP] || 0) + wangText.baseSpacingTop) * scale + spacing;
             let spacingRight =
-              (parseInt(state.style[wangConstants.STYLE_SPACING_RIGHT] || 0) + wangText.baseSpacingRight) * scale + spacing;
+              (parseInt(state.style[wangConstants.STYLE_SPACING_RIGHT] || 0) + wangText.baseSpacingRight) * scale +
+              spacing;
             let spacingBottom =
               (parseInt(state.style[wangConstants.STYLE_SPACING_BOTTOM] || 0) + wangText.baseSpacingBottom) * scale +
               spacing;
             let spacingLeft =
-              (parseInt(state.style[wangConstants.STYLE_SPACING_LEFT] || 0) + wangText.baseSpacingLeft) * scale + spacing;
+              (parseInt(state.style[wangConstants.STYLE_SPACING_LEFT] || 0) + wangText.baseSpacingLeft) * scale +
+              spacing;
             let hpos = wangUtils.getValue(state.style, wangConstants.STYLE_LABEL_POSITION, wangConstants.ALIGN_CENTER);
             let vpos = wangUtils.getValue(
               state.style,
@@ -507,7 +516,10 @@ export class wangCellEditor {
         this.textNode.style.visibility = 'hidden';
       }
 
-      if (this.autoSize && (this.graph.model.isEdge(state.cell) || state.style[wangConstants.STYLE_OVERFLOW] != 'fill')) {
+      if (
+        this.autoSize &&
+        (this.graph.model.isEdge(state.cell) || state.style[wangConstants.STYLE_OVERFLOW] != 'fill')
+      ) {
         window.setTimeout(() => {
           this.resize();
         }, 0);
@@ -651,7 +663,11 @@ export class wangCellEditor {
         Math.max(minHeight, state.height - spacingTop - spacingBottom)
       );
       let hpos = wangUtils.getValue(state.style, wangConstants.STYLE_LABEL_POSITION, wangConstants.ALIGN_CENTER);
-      let vpos = wangUtils.getValue(state.style, wangConstants.STYLE_VERTICAL_LABEL_POSITION, wangConstants.ALIGN_MIDDLE);
+      let vpos = wangUtils.getValue(
+        state.style,
+        wangConstants.STYLE_VERTICAL_LABEL_POSITION,
+        wangConstants.ALIGN_MIDDLE
+      );
       result =
         state.shape != null && hpos == wangConstants.ALIGN_CENTER && vpos == wangConstants.ALIGN_MIDDLE
           ? state.shape.getLabelBounds(result)
@@ -689,7 +705,11 @@ export class wangCellEditor {
       }
 
       if (this.graph.getModel().isVertex(state.cell)) {
-        let horizontal = wangUtils.getValue(state.style, wangConstants.STYLE_LABEL_POSITION, wangConstants.ALIGN_CENTER);
+        let horizontal = wangUtils.getValue(
+          state.style,
+          wangConstants.STYLE_LABEL_POSITION,
+          wangConstants.ALIGN_CENTER
+        );
 
         if (horizontal == wangConstants.ALIGN_LEFT) {
           result.x -= state.width;

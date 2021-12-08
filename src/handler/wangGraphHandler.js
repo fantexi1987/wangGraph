@@ -377,7 +377,8 @@ export class wangGraphHandler {
       shape.dialect = wangConstants.DIALECT_STRICTHTML;
       shape.init(this.graph.container);
     } else {
-      shape.dialect = this.graph.dialect != wangConstants.DIALECT_SVG ? wangConstants.DIALECT_VML : wangConstants.DIALECT_SVG;
+      shape.dialect =
+        this.graph.dialect != wangConstants.DIALECT_SVG ? wangConstants.DIALECT_VML : wangConstants.DIALECT_SVG;
       shape.init(this.graph.getView().getOverlayPane());
       shape.pointerEvents = false;
 

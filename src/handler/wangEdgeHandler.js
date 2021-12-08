@@ -656,7 +656,8 @@ export class wangEdgeHandler {
               if (
                 idx > 0 &&
                 idx < abs.length - 1 &&
-                wangUtils.ptSegDistSq(abs[idx - 1].x, abs[idx - 1].y, abs[idx + 1].x, abs[idx + 1].y, tmp.x, tmp.y) < tol
+                wangUtils.ptSegDistSq(abs[idx - 1].x, abs[idx - 1].y, abs[idx + 1].x, abs[idx + 1].y, tmp.x, tmp.y) <
+                  tol
               ) {
                 points.splice(idx - 1, 1);
                 result = points;

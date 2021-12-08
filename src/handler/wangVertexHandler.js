@@ -186,7 +186,12 @@ export class wangVertexHandler {
   }
 
   getSelectionBounds(state) {
-    return new wangRectangle(Math.round(state.x), Math.round(state.y), Math.round(state.width), Math.round(state.height));
+    return new wangRectangle(
+      Math.round(state.x),
+      Math.round(state.y),
+      Math.round(state.width),
+      Math.round(state.height)
+    );
   }
 
   createParentHighlightShape(bounds) {
@@ -254,7 +259,11 @@ export class wangVertexHandler {
     } else if (index == wangEvent.ROTATION_HANDLE) {
       return new wangEllipse(bounds, fillColor || wangConstants.HANDLE_FILLCOLOR, wangConstants.HANDLE_STROKECOLOR);
     } else {
-      return new wangRectangleShape(bounds, fillColor || wangConstants.HANDLE_FILLCOLOR, wangConstants.HANDLE_STROKECOLOR);
+      return new wangRectangleShape(
+        bounds,
+        fillColor || wangConstants.HANDLE_FILLCOLOR,
+        wangConstants.HANDLE_STROKECOLOR
+      );
     }
   }
 

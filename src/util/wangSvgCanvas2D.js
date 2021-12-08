@@ -340,7 +340,12 @@ export class wangSvgCanvas2D extends wangAbstractCanvas2D {
           s.gradientDirection
         );
 
-        if (!wangClient.IS_CHROMEAPP && !wangClient.IS_IE11 && !wangClient.IS_EDGE && this.root.ownerDocument == document) {
+        if (
+          !wangClient.IS_CHROMEAPP &&
+          !wangClient.IS_IE11 &&
+          !wangClient.IS_EDGE &&
+          this.root.ownerDocument == document
+        ) {
           let base = this.getBaseUrl().replace(/([\(\)])/g, '\\$1');
           this.node.setAttribute('fill', 'url(' + base + '#' + id + ')');
         } else {
@@ -757,10 +762,18 @@ export class wangSvgCanvas2D extends wangAbstractCanvas2D {
       this.state.fontBackgroundColor != null ? this.state.fontBackgroundColor : null,
       this.state.fontBorderColor != null ? this.state.fontBorderColor : null,
       'display: flex; align-items: unsafe ' +
-        (valign == wangConstants.ALIGN_TOP ? 'flex-start' : valign == wangConstants.ALIGN_BOTTOM ? 'flex-end' : 'center') +
+        (valign == wangConstants.ALIGN_TOP
+          ? 'flex-start'
+          : valign == wangConstants.ALIGN_BOTTOM
+          ? 'flex-end'
+          : 'center') +
         '; ' +
         'justify-content: unsafe ' +
-        (align == wangConstants.ALIGN_LEFT ? 'flex-start' : align == wangConstants.ALIGN_RIGHT ? 'flex-end' : 'center') +
+        (align == wangConstants.ALIGN_LEFT
+          ? 'flex-start'
+          : align == wangConstants.ALIGN_RIGHT
+          ? 'flex-end'
+          : 'center') +
         '; ',
       this.getTextCss(),
       s,
@@ -1034,7 +1047,12 @@ export class wangSvgCanvas2D extends wangAbstractCanvas2D {
         this.root.appendChild(c);
       }
 
-      if (!wangClient.IS_CHROMEAPP && !wangClient.IS_IE11 && !wangClient.IS_EDGE && this.root.ownerDocument == document) {
+      if (
+        !wangClient.IS_CHROMEAPP &&
+        !wangClient.IS_IE11 &&
+        !wangClient.IS_EDGE &&
+        this.root.ownerDocument == document
+      ) {
         let base = this.getBaseUrl().replace(/([\(\)])/g, '\\$1');
         node.setAttribute('clip-path', 'url(' + base + '#' + c.getAttribute('id') + ')');
       } else {

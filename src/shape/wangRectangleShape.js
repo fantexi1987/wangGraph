@@ -52,7 +52,8 @@ export class wangRectangleShape extends wangShape {
           );
         } else {
           let f =
-            wangUtils.getValue(this.style, wangConstants.STYLE_ARCSIZE, wangConstants.RECTANGLE_ROUNDING_FACTOR * 100) / 100;
+            wangUtils.getValue(this.style, wangConstants.STYLE_ARCSIZE, wangConstants.RECTANGLE_ROUNDING_FACTOR * 100) /
+            100;
           r = Math.min(w * f, h * f);
         }
 
