@@ -4,10 +4,10 @@ import Worker from 'web-worker:./graph-render.worker';
 const promise = new WorkerPromise(new Worker());
 
 export default {
-  send(msg) {
+  doWebWorkerFn(fn) {
     return promise.postMessage({
-      type: 'message',
-      msg
+      type: 'func',
+      fn
     });
   }
 };

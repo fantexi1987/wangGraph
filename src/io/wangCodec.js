@@ -4,9 +4,6 @@ import { wangCellPath } from '@wangGraph/model/wangCellPath';
 import { wangCell } from '@wangGraph/model/wangCell';
 import { wangConstants } from '@wangGraph/util/wangConstants';
 import { wangUtils } from '@wangGraph/util/wangUtils';
-
-// import RenderWorker from '@wangGraph/worker';
-
 export class wangCodec {
   elements = null;
   encodeDefaults = false;
@@ -130,9 +127,6 @@ export class wangCodec {
   }
 
   decode(node, into) {
-    // RenderWorker.send({ msg: 'hello!!' }).then((result) => {
-    //   console.log(result);
-    // });
     this.updateElements();
     let obj = null;
 

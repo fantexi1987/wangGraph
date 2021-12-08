@@ -7,8 +7,8 @@ function onMessage(self, e) {
     return;
   }
   var messageId = message[0];
-  var error = message[1];
-  var result = message[2];
+  var result = message[1];
+  var error = message[2];
 
   var callback = self._callbacks[messageId];
 
