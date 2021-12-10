@@ -110,4 +110,4 @@ window.getGraphData = function (treeNum = 1, row = 10, column = 5) {
   }
   xmlStr += ender;
   return xmlStr;
-}
+};
