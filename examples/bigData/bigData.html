@@ -88,6 +88,7 @@
 					var graph = new wangGraph(container);
 
 					graph.setConnectable(true);
+					graph.setVisualRender(true);
 
 					// Enables rubberband selection
 					new wangRubberband(graph);
@@ -137,7 +138,7 @@
 
 	<!-- Creates a container for the graph with a grid wallpaper -->
 	<div id="graphContainer"
-		style="position:relative;overflow:hidden;width:1321px;height:541px;background:url('editors/images/grid.gif');cursor:default;">
+		style="position:relative;overflow:hidden;width:100%;height:100%;background:url('editors/images/grid.gif');cursor:default;">
 	</div>
 </body>
 </html>

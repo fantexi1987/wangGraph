@@ -870,7 +870,8 @@ export class wangCellRenderer {
     let view = state?.view;
     let graph = view?.graph;
     let container = graph?.container;
-    if (container && graph.panningHandler?.panningEnabled) {
+    let isVisualRender = graph.getVisualRender();
+    if (container && isVisualRender) {
       const { x: cellX, y: cellY, height: cellH, width: cellW } = state.cellBounds;
       const { x: tx, y: ty } = view.translate;
       const rx = cellX + tx;

@@ -43,6 +43,7 @@ import { wangClient } from '@wangGraph/wangClient';
 import { wangResources } from '@wangGraph/util/wangResources';
 
 export class wangGraph extends wangEventSource {
+  isVisualRender = false;
   isMouseDown = false;
   stylesheet = null;
   selectionModel = null;
@@ -187,6 +188,14 @@ export class wangGraph extends wangEventSource {
     }
 
     this.view.revalidate();
+  }
+
+  setVisualRender(isVisual) {
+    this.isVisualRender = isVisual;
+  }
+
+  getVisualRender() {
+    return this.panningHandler?.panningEnabled && this.isVisualRender;
   }
 
   init(container) {
