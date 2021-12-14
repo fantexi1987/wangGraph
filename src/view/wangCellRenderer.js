@@ -877,7 +877,7 @@ export class wangCellRenderer {
       const rx = cellX + tx;
       const ry = cellY + ty;
       const { offsetWidth: viewWidth, offsetHeight: viewHeight } = container;
-      const xMargin = 0;
+      const xMargin = graph.visualRenderMargin;
       const scale = view.scale;
       if (
         rx + cellW + xMargin < 0 ||

@@ -71,7 +71,7 @@
 			else
 			{
 				var begin = new Date().getTime();
-				var xml = window.getGraphData(50,10,10);
+				var xml = window.getGraphData(50,20,10);
 				var begin1 = new Date().getTime();
 				console.log("--------make data:" + (begin1-begin));
 				var xmlDocument = wangUtils.parseXml(xml);
@@ -88,13 +88,14 @@
 					var graph = new wangGraph(container);
 
 					graph.setConnectable(true);
-					graph.setVisualRender(true);
-
+					
 					// Enables rubberband selection
 					new wangRubberband(graph);
-
+					
 					graph.setPanning(true);
 					graph.panningHandler.useLeftButtonForPanning = true;
+					graph.isVisualRender = true;
+					graph.visualRenderMargin = 400;
 					
 					// Gets the default parent for inserting new cells. This
 					// is normally the first child of the root (ie. layer 0).
