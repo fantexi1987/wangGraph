@@ -193,7 +193,7 @@ export class wangGraph extends wangEventSource {
     this.view.revalidate();
   }
 
-  getVisualRender() {
+  isVisualRender() {
     return this.panningHandler?.panningEnabled && this.visualRender.open;
   }
 

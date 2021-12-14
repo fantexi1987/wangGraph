@@ -870,7 +870,7 @@ export class wangCellRenderer {
     let view = state?.view;
     let graph = view?.graph;
     let container = graph?.container;
-    let isVisualRender = graph.getVisualRender();
+    let isVisualRender = graph.isVisualRender();
     if (container && isVisualRender) {
       const { x: cellX, y: cellY, height: cellH, width: cellW } = state.cellBounds;
       const { x: tx, y: ty } = view.translate;
