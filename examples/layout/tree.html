@@ -1,0 +1,194 @@
+<!--
+  Copyright (c) 2006-2013, JGraph Ltd
+  
+  Graphlayout example for wangGraph. This example demonstrates using
+  automatic graph layouts and listening to changes of the graph size
+  to keep the container size in sync.
+-->
+<html>
+<head>
+	<title>Graphlayout example for wangGraph</title>
+
+	<!-- Sets the basepath for the library if not in same directory -->
+	<script type="text/javascript">
+		wangBasePath = '../dist';
+	</script>
+
+	<!-- Loads and initializes the library -->
+	<script type="text/javascript" src="../../dist/wangGraph.umd.js"></script>
+
+	<!-- Example code -->
+	<script type="text/javascript">
+		Object.keys(window.wGraph).forEach(wangGraphClassName => { window[wangGraphClassName] = window.wGraph[wangGraphClassName]; });
+		// Program starts here. Creates a sample graph in the
+		// DOM node with the specified ID. This function is invoked
+		// from the onLoad event handler of the document (see below).
+		function main(container)
+		{
+			// Checks if browser is supported
+			if (!wangClient.isBrowserSupported())
+			{
+				// Displays an error message if the browser is
+				// not supported.
+				wangUtils.error('Browser is not supported!', 200, false);
+			}
+			else
+			{
+				// Creates the graph inside the given container
+				var graph = new wangGraph(container);
+				
+				// Disables basic selection and cell handling
+				graph.setEnabled(false);
+				
+				// Changes the default vertex style in-place
+				var style = graph.getStylesheet().getDefaultVertexStyle();
+				style[wangConstants.STYLE_SHAPE] = wangConstants.SHAPE_ELLIPSE;
+				style[wangConstants.STYLE_PERIMETER] = wangPerimeter.EllipsePerimeter;
+				style[wangConstants.STYLE_GRADIENTCOLOR] = 'white';
+				style[wangConstants.STYLE_FONTSIZE] = '10';
+								
+				// Updates the size of the container to match
+				// the size of the graph when it changes. If
+				// this is commented-out, and the DIV style's
+				// overflow is set to "auto", then scrollbars
+				// will appear for the diagram. If overflow is
+				// set to "visible", then the diagram will be
+				// visible even when outside the parent DIV.
+				// With the code below, the parent DIV will be
+				// resized to contain the complete graph.
+				//graph.setResizeContainer(true);
+				
+				// Larger grid size yields cleaner layout result
+				graph.gridSize = 40;
+				
+				// Gets the default parent for inserting new cells. This
+				// is normally the first child of the root (ie. layer 0).
+				var parent = graph.getDefaultParent();
+
+				// Creates a layout algorithm to be used
+				// with the graph
+				var layout = new wangCompactTreeLayout(graph, false);
+
+				// Moves stuff wider apart than usual
+				// layout.forceConstant = 80;
+
+				// Reference to the transition checkbox
+				var animate = document.getElementById('animate');
+				
+				// Adds a button to execute the layout
+				document.body.insertBefore(wangUtils.button('LooseTreeLayout',
+					function(evt)
+					{
+						graph.getModel().beginUpdate();
+						try
+						{
+							// Creates a layout algorithm to be used
+							// with the graph
+							var looseTreeLayout = new wangLooseTreeLayout(graph, false);
+							looseTreeLayout.execute(parent);
+						}
+						catch (e)
+						{
+							throw e;
+						}
+						finally
+						{
+							if (animate.checked)
+							{
+								var morph = new wangMorphing(graph);
+								morph.addListener(wangEvent.DONE, function()
+								{
+									graph.getModel().endUpdate();
+								});
+								
+								morph.startAnimation();
+							}
+							else
+							{
+								graph.getModel().endUpdate();
+							}
+						}
+					}
+				), document.body.firstChild);
+												
+				// Adds a button to execute the layout
+				document.body.insertBefore(wangUtils.button('CompactTreeLayout',
+					function(evt)
+					{
+						graph.getModel().beginUpdate();
+						try
+						{
+							layout.execute(parent);
+						}
+						catch (e)
+						{
+							throw e;
+						}
+						finally
+						{
+							if (animate.checked)
+							{
+								// Default values are 6, 1.5, 20
+								var morph = new wangMorphing(graph, 10, 1.7, 20);
+								morph.addListener(wangEvent.DONE, function()
+								{
+									graph.getModel().endUpdate();
+								});
+								morph.startAnimation();
+							}
+							else
+							{
+								graph.getModel().endUpdate();
+							}
+						}
+					}
+				), document.body.firstChild);
+
+				// Adds cells to the model in a single step
+				graph.getModel().beginUpdate();
+				var w = 30;
+				var h = 30;
+				try
+				{
+					var v1 = graph.insertVertex(parent, null, '1', 0, 0, w, h);
+					var v2 = graph.insertVertex(parent, null, '2', 0, 0, w, h);
+					var v3 = graph.insertVertex(parent, null, '3', 0, 0, w, h);
+					var v4 = graph.insertVertex(parent, null, '4', 0, 0, w, h);
+					var v5 = graph.insertVertex(parent, null, '5', 0, 0, w, h);
+					var v6 = graph.insertVertex(parent, null, '6', 0, 0, w, h);
+					var v7 = graph.insertVertex(parent, null, '7', 0, 0, w, h);
+					var v8 = graph.insertVertex(parent, null, '8', 0, 0, w, h);
+					graph.insertEdge(parent, null, '', v1, v2);
+					graph.insertEdge(parent, null, '', v2, v3);
+					graph.insertEdge(parent, null, '', v3, v4);
+					graph.insertEdge(parent, null, '', v3, v5);
+					graph.insertEdge(parent, null, '', v3, v6);
+					graph.insertEdge(parent, null, '', v1, v7);
+					graph.insertEdge(parent, null, '', v1, v8);
+					
+					
+					// Executes the layout
+					layout.execute(parent);
+				}
+				finally
+				{
+					// Updates the display
+					graph.getModel().endUpdate();
+				}
+			}
+		};
+	</script>
+</head>
+
+<!-- Page passes the container for the graph to the program -->
+<body onload="main(document.getElementById('graphContainer'))">
+
+	<!-- Creates a container for the graph with a grid wallpaper. Make sure to define the position
+		and overflow attributes! See comments on the adding of the size-listener on line 54 ff!  -->
+	<div id="graphContainer"
+		style="position:relative;overflow:auto;width:821px;height:641px;background:url('editors/images/grid.gif');">
+	</div>
+	<br>
+	<input type="checkbox" id="animate" checked="checked"/> Transitions
+</body>
+</html>

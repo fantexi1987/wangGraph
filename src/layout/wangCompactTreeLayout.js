@@ -21,8 +21,8 @@ export class wangCompactTreeLayout extends wangGraphLayout {
   nodeDistance = 20;
   resetEdges = true;
   prefHozEdgeSep = 5;
-  prefVertEdgeOff = 4;
-  minEdgeJetty = 8;
+  prefVertEdgeOff = 0;
+  minEdgeJetty = 10;
   channelBuffer = 4;
   edgeRouting = true;
   sortEdges = false;

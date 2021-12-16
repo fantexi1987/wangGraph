@@ -561,7 +561,7 @@ export class wangCoordinateAssignment extends wangHierarchicalLayoutStage {
         let downXPositions = [];
         let currentX = cell.getGeneralPurposeletiable(cell.minRank + 1);
 
-        for (let i = cell.minRank + 1; i < cell.maxRank - 1; i++) {
+        for (var i = cell.minRank + 1; i < cell.maxRank - 1; i++) {
           let nextX = cell.getX(i + 1);
 
           if (currentX == nextX) {

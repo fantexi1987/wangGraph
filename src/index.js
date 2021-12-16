@@ -51,6 +51,7 @@ export { wangObjectCodec } from '@wangGraph/io/wangObjectCodec';
 export { wangCircleLayout } from '@wangGraph/layout/wangCircleLayout';
 export { wangCompactTreeLayout } from '@wangGraph/layout/wangCompactTreeLayout';
 export { wangCompositeLayout } from '@wangGraph/layout/wangCompositeLayout';
+export { wangLooseTreeLayout } from '@wangGraph/layout/wangLooseTreeLayout';
 export { wangEdgeLabelLayout } from '@wangGraph/layout/wangEdgeLabelLayout';
 export { wangFastOrganicLayout } from '@wangGraph/layout/wangFastOrganicLayout';
 export { wangGraphLayout } from '@wangGraph/layout/wangGraphLayout';
